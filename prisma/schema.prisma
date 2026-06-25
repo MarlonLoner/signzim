@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CompanyStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  ARCHIVED
+}
+
+enum PackageType {
+  FREE
+  VERIFIED
+  FEATURED
+}
+
+enum PaymentStatus {
+  NOT_REQUIRED
+  PENDING_PAYMENT
+  PAID
+  EXPIRED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  SENT_TO_COMPANIES
+  CLOSED
+  LOST
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Company {
+  id             String             @id @default(cuid())
+  name           String
+  slug           String             @unique
+  description    String
+  logoUrl        String?
+  coverImageUrl  String?
+  city           String
+  address        String?
+  whatsapp       String
+  email          String
+  website        String?
+  facebookUrl    String?
+  status         CompanyStatus      @default(PENDING)
+  isVerified     Boolean            @default(false)
+  isFeatured     Boolean            @default(false)
+  packageType    PackageType        @default(FREE)
+  paymentStatus  PaymentStatus      @default(NOT_REQUIRED)
+  paymentReference String?
+  paidUntil      DateTime?
+  adminNotes     String?
+  contactPerson  String
+  profileViewCount Int              @default(0)
+  whatsappClickCount Int            @default(0)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  services       CompanyService[]
+  portfolio      PortfolioImage[]
+  reviews        Review[]
+}
+
+model Service {
+  id          String           @id @default(cuid())
+  name        String
+  slug        String           @unique
+  description String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  companies   CompanyService[]
+}
+
+model CompanyService {
+  id        String  @id @default(cuid())
+  companyId String
+  serviceId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, serviceId])
+}
+
+model PortfolioImage {
+  id        String   @id @default(cuid())
+  companyId String
+  imageUrl  String
+  caption   String?
+  createdAt DateTime @default(now())
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+model Lead {
+  id                String     @id @default(cuid())
+  customerName      String
+  phone             String
+  email             String?
+  city              String
+  serviceNeeded     String
+  projectDescription String
+  budgetRange       String
+  timeline          String
+  referenceImageUrl String?
+  leadSource        String?
+  adminNotes        String?
+  status            LeadStatus @default(NEW)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}
+
+model Review {
+  id           String       @id @default(cuid())
+  companyId    String
+  customerName String
+  rating       Int
+  comment      String
+  status       ReviewStatus @default(PENDING)
+  createdAt    DateTime     @default(now())
+  company      Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
