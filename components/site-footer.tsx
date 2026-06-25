@@ -11,12 +11,14 @@ const quickLinks = [
 const customerLinks = [
   { href: "/request-quote", label: "Request Quote" },
   { href: "/companies", label: "Browse Companies" },
+  { href: "/services/interior-deco", label: "Interior Deco" },
+  { href: "/services/shop-fitting", label: "Shop Fitting" },
   { href: "/services/vehicle-branding", label: "Vehicle Branding" },
   { href: "/services/lightboxes", label: "Lightboxes" }
 ];
 
 const providerLinks = [
-  { href: "/for-signage-companies", label: "For Signage Companies" },
+  { href: "/for-signage-companies", label: "For Providers" },
   { href: "/list-your-company", label: "List Your Company" },
   { href: "/about", label: "Marketplace Trust" }
 ];
@@ -32,12 +34,13 @@ export function SiteFooter() {
             </span>
             <span>
               <span className="block text-base font-black text-white">Sign Zim</span>
-              <span className="block text-xs font-medium text-zinc-400">Your next sign starts here.</span>
+              <span className="block text-xs font-medium text-zinc-400">Your next branded space starts here.</span>
             </span>
           </Link>
           <p className="mt-5 max-w-md text-sm leading-6 text-zinc-400">
-            Sign Zim helps Zimbabwean businesses discover signage providers, compare portfolios, and request quotes
-            for shopfront signs, vehicle branding, billboards, lightboxes, banners, vinyl, and more.
+            Sign Zim helps Zimbabwean businesses discover signage, branding, interior deco and fitting providers,
+            compare portfolios, and request quotes for shopfront signs, vehicle branding, displays, counters, shelves,
+            partitions, branded interiors and more.
           </p>
           <p className="mt-5 max-w-md text-xs leading-5 text-zinc-500">
             Sign Zim is a marketplace directory, not the installer or contracting party. Customers should confirm

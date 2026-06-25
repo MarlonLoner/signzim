@@ -3,12 +3,12 @@ import Link from "next/link";
 import { Building2, CheckCircle2, ImagePlus, TriangleAlert } from "lucide-react";
 import { TrustBadgeExplainer } from "@/components/trust-badge-explainer";
 import { createCompanySubmission } from "@/lib/actions";
-import { cities, packageOptions, serviceCatalog } from "@/lib/data";
+import { cities, groupedServiceCatalog, packageOptions } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "List Your Signage Company | Sign Zim",
+  title: "List Your Company | Sign Zim",
   description:
-    "Submit a Zimbabwe signage company for review on Sign Zim, including services, city, contacts, portfolio links, and selected listing package."
+    "Submit a Zimbabwe signage, interior deco, shop fitting, office fitting, print, branding or display company for review on Sign Zim."
 };
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -27,7 +27,7 @@ export default async function ListYourCompanyPage({ searchParams }: { searchPara
     "Company profile with city and contact person",
     "Services listed across Sign Zim service pages",
     "WhatsApp, email, website, and Facebook links",
-    "Portfolio gallery for recent signage work",
+    "Portfolio gallery for recent signage, branding, deco, fitting, or display work",
     "Visibility in relevant service and city pages"
   ];
   const packageComparison = [
@@ -54,7 +54,7 @@ export default async function ListYourCompanyPage({ searchParams }: { searchPara
         <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Provider listing</p>
         <h1 className="mt-4 text-5xl font-black leading-tight text-white">List Your Company</h1>
         <p className="mt-5 text-lg leading-8 text-zinc-300">
-          Submit the company details, service categories, contact information, and portfolio links for review.
+          Submit signage, deco, fitting, print, branding, or display provider details for review.
         </p>
         <Link href="/for-signage-companies" className="secondary-button mt-6 w-fit">
           Provider Sales Page
@@ -150,19 +150,26 @@ export default async function ListYourCompanyPage({ searchParams }: { searchPara
           <fieldset className="field">
             <legend className="label">Services offered</legend>
             <div className="grid gap-3 sm:grid-cols-2">
-              {serviceCatalog.map((service) => (
-                <label key={service.slug} className="checkbox-card">
-                  <input
-                    type="checkbox"
-                    name="services"
-                    value={service.slug}
-                    className="mt-1 h-4 w-4 rounded border-white/20 bg-black text-amberglow focus:ring-amberglow"
-                  />
-                  <span>
-                    <span className="block font-semibold text-white">{service.name}</span>
-                    <span className="mt-1 block text-xs leading-5 text-zinc-400">{service.description}</span>
-                  </span>
-                </label>
+              {groupedServiceCatalog.map(({ group, services }) => (
+                <div key={group} className="grid gap-3 sm:col-span-2">
+                  <h3 className="text-sm font-black text-honey">{group}</h3>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {services.map((service) => (
+                      <label key={service.slug} className="checkbox-card">
+                        <input
+                          type="checkbox"
+                          name="services"
+                          value={service.slug}
+                          className="mt-1 h-4 w-4 rounded border-white/20 bg-black text-amberglow focus:ring-amberglow"
+                        />
+                        <span>
+                          <span className="block font-semibold text-white">{service.name}</span>
+                          <span className="mt-1 block text-xs leading-5 text-zinc-400">{service.description}</span>
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </fieldset>
@@ -175,7 +182,7 @@ export default async function ListYourCompanyPage({ searchParams }: { searchPara
               minLength={20}
               rows={5}
               className="input"
-              placeholder="Describe your signage services, strengths, equipment, coverage area, and project types."
+              placeholder="Describe your signage, branding, interior deco, fitting, print, display or branded space services."
             />
           </label>
 
@@ -211,8 +218,8 @@ export default async function ListYourCompanyPage({ searchParams }: { searchPara
             <span className="label">Portfolio image URLs optional</span>
             <span className="block text-xs leading-5 text-zinc-400">
               Upload or paste links to clear photos of completed jobs. Strong portfolio images improve customer trust.
-              Good categories include shopfront signs, vehicle branding, lightboxes, 3D signs, billboards, banners,
-              reception signs, and before/after photos.
+              Good categories include completed shopfront signs, branded interiors, reception areas, office fit-outs,
+              shelves and counters, vehicle branding, wall graphics, lightboxes, display stands, and before/after photos.
             </span>
             <textarea
               name="portfolioUrls"
@@ -254,10 +261,10 @@ export default async function ListYourCompanyPage({ searchParams }: { searchPara
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="rounded-lg border border-white/10 bg-white/[0.045] p-6">
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Why list on Sign Zim?</p>
-            <h2 className="mt-4 text-2xl font-black text-white">Put your signage work where buyers are searching.</h2>
+            <h2 className="mt-4 text-2xl font-black text-white">Put your visible work where buyers are searching.</h2>
             <p className="mt-3 text-sm leading-7 text-zinc-300">
-              Sign Zim helps signage companies appear on service pages, city pages, and marketplace listings where
-              customers can compare providers before sending a quote request.
+              Sign Zim helps signage, deco, fitting, print and display providers appear on service pages, city pages,
+              and marketplace listings where customers can compare providers before sending a quote request.
             </p>
             <Link href="#submit-listing" className="primary-button mt-6 w-fit">
               Submit Listing

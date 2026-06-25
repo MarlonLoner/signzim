@@ -35,8 +35,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
   const title = company ? `${company.name} | Sign Zim` : "Company Profile | Sign Zim";
   const description = company
-    ? `View ${company.name} in ${company.city}, compare signage services and portfolio work, and request a quote through Sign Zim.`
-    : "View Zimbabwe signage company profiles, portfolios, services, and contact details on Sign Zim.";
+    ? `View ${company.name} in ${company.city}, compare services and portfolio work, and request a quote through Sign Zim.`
+    : "View Zimbabwe provider profiles, portfolios, services, and contact details on Sign Zim.";
   const url = absoluteUrl(`/companies/${slug}`);
   const image = company?.coverImageUrl || "/images/sign-zim-hero.png";
 

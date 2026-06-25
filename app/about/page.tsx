@@ -4,9 +4,9 @@ import { ArrowRight, BadgeCheck, Building2, MessageCircle, Search, ShieldCheck }
 import { SectionHeading } from "@/components/section-heading";
 
 export const metadata: Metadata = {
-  title: "About Sign Zim | Zimbabwe Signage Marketplace",
+  title: "About Sign Zim | Zimbabwe Visibility and Fitting Marketplace",
   description:
-    "Learn how Sign Zim helps Zimbabwean businesses find signage companies, compare portfolios, and request quotes for shopfront signs, vehicle branding, billboards, lightboxes, banners, vinyl, and more."
+    "Learn how Sign Zim helps Zimbabwean businesses find signage, branding, interior deco and fitting providers, compare portfolios, and request quotes."
 };
 
 export default function AboutPage() {
@@ -16,14 +16,14 @@ export default function AboutPage() {
         <div className="page-shell grid gap-10 py-12 lg:grid-cols-[1fr_360px] lg:items-end">
           <SectionHeading
             eyebrow="About Sign Zim"
-            title="A Zimbabwean marketplace helping businesses find signage companies faster."
-            copy="From shopfront signs and vehicle branding to billboards, lightboxes, banners and vinyl, Sign Zim helps customers compare providers and request quotes in one place."
+            title="A Zimbabwean marketplace helping businesses find visibility and space providers faster."
+            copy="From shopfront signs and vehicle branding to branded interiors, retail displays, counters, shelving and office fit-outs, Sign Zim helps customers compare providers and request quotes in one place."
           />
           <div className="panel rounded-lg p-6">
             <Building2 className="h-7 w-7 text-amberglow" aria-hidden="true" />
             <h2 className="mt-5 text-2xl font-black text-white">Built for launch visibility.</h2>
             <p className="mt-3 text-sm leading-6 text-zinc-400">
-              The platform gives signage providers a public profile, service pages, city pages, portfolio space, and
+              The platform gives providers a public profile, service pages, city pages, portfolio space, and
               tracked WhatsApp interest.
             </p>
           </div>
@@ -66,9 +66,9 @@ export default function AboutPage() {
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-amberglow/40 bg-black/25 px-3 py-1 text-xs font-semibold text-honey">
               <BadgeCheck className="h-3.5 w-3.5" aria-hidden="true" />
-              Zimbabwe-focused signage directory
+              Zimbabwe-focused visibility marketplace
             </div>
-            <h2 className="text-2xl font-black text-white">Ready to compare signage providers?</h2>
+            <h2 className="text-2xl font-black text-white">Ready to compare providers?</h2>
             <p className="mt-2 text-sm leading-6 text-zinc-300">
               Browse companies or submit one quote request with service, city, budget, and timeline.
             </p>

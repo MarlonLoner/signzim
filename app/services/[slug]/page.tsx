@@ -20,10 +20,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
   const service = getServiceBySlug(slug);
-  const title = service ? `${service.name} Companies in Zimbabwe | Sign Zim` : "Signage Services | Sign Zim";
+  const title = service ? `${service.name} Providers in Zimbabwe | Sign Zim` : "Services | Sign Zim";
   const description =
     service?.seoDescription ??
-    "Find signage companies in Zimbabwe by service, compare portfolios, and request signage quotes through Sign Zim.";
+    "Find signage, branding, interior deco and fitting providers in Zimbabwe by service, compare portfolios, and request quotes through Sign Zim.";
   const url = absoluteUrl(service ? `/services/${service.slug}` : "/services");
   const image = "/images/sign-zim-hero.png";
 
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       title,
       description,
       url,
-      images: [{ url: image, width: 1200, height: 630, alt: "Sign Zim signage service directory" }]
+      images: [{ url: image, width: 1200, height: 630, alt: "Sign Zim service directory" }]
     },
     twitter: {
       card: "summary_large_image",
@@ -82,7 +82,23 @@ const serviceUseCases: Record<string, string[]> = {
   "vehicle-branding": ["Fleet wraps", "Delivery vehicle graphics", "Partial wraps and decals"],
   "shopfront-signage": ["Fascia boards", "Mall storefronts", "Window graphics"],
   "event-branding": ["Stage backdrops", "Expo booths", "Branded tents and flags"],
-  "vinyl-printing": ["Window decals", "Stickers and labels", "Promotional graphics"]
+  "vinyl-printing": ["Window decals", "Stickers and labels", "Promotional graphics"],
+  "interior-deco": ["Salon interiors", "Retail ambience", "Branded customer-facing spaces"],
+  "shop-fitting": ["Retail counters", "Shelving layouts", "Shop-ready fixtures"],
+  "office-fitting": ["Reception layouts", "Work areas", "Branded office environments"],
+  "retail-displays": ["Product display zones", "Merchandising fixtures", "Promotional stands"],
+  "reception-branding": ["Lobby feature walls", "Front desk branding", "Welcome areas"],
+  "wall-branding": ["Wall graphics", "Feature walls", "Interior brand storytelling"],
+  "custom-counters": ["Checkout counters", "Reception counters", "Service desks"],
+  "shelving-installation": ["Retail shelving", "Stock display areas", "Wall shelves"],
+  "glass-partitions": ["Meeting rooms", "Reception divisions", "Modern office separation"],
+  "office-partitions": ["Workspace zoning", "Privacy dividers", "Office layout upgrades"],
+  "lighting-ambience": ["Feature lighting", "Retail mood-setting", "Decorative ambience"],
+  "wallpaper-wall-finishes": ["Wallpaper", "Textured surfaces", "Branded wall treatments"],
+  "exhibition-stands": ["Expo booths", "Launch stands", "Modular event environments"],
+  "display-stands": ["Product stands", "Brochure stands", "Promotional fixtures"],
+  "pop-displays": ["Point-of-purchase displays", "Campaign fixtures", "Retail activations"],
+  "ceiling-lighting-features": ["Decorative ceilings", "Light coves", "Interior focal points"]
 };
 
 function getServiceSeoContent(service: CatalogService) {
@@ -91,11 +107,11 @@ function getServiceSeoContent(service: CatalogService) {
     useCases: serviceUseCases[service.slug] ?? [
       "Retail and office branding",
       "Promotional campaigns",
-      "Commercial site signage"
+      "Customer-facing commercial spaces"
     ],
     questions: [
-      "Can the provider help with artwork, measurements, production, and installation?",
-      "Which materials are recommended for indoor use, outdoor weather, or high-traffic areas?",
+      "Can the provider help with artwork, measurements, production, fitting, and installation?",
+      "Which materials are recommended for indoor use, outdoor weather, foot traffic, or customer-facing areas?",
       "What lead time, warranty, maintenance, and payment terms should be confirmed before work begins?"
     ]
   };
@@ -121,10 +137,10 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
           <div className="grid gap-8 lg:grid-cols-[1fr_340px] lg:items-end">
             <SectionHeading
               eyebrow="Service landing page"
-              title={service ? `${service.name} companies in Zimbabwe` : "Signage service providers"}
+              title={service ? `${service.name} providers in Zimbabwe` : "Service providers"}
               copy={
                 service?.seoDescription ??
-                "Browse approved Zimbabwean signage providers, compare portfolios, and request a quote."
+                "Browse approved Zimbabwean providers, compare portfolios, and request a quote."
               }
             />
             <div className="panel rounded-lg p-5">
@@ -144,7 +160,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
                 <div className="mt-4">
                   <ShareActions
                     url={pageUrl}
-                    whatsappText={`Find ${service.name} companies in Zimbabwe on Sign Zim: ${pageUrl}`}
+                    whatsappText={`Find ${service.name} providers in Zimbabwe on Sign Zim: ${pageUrl}`}
                     label="Share service page"
                   />
                 </div>
@@ -170,7 +186,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
             <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
               {error
                 ? "We're loading provider data. Please try again shortly."
-                : "Sign Zim is still adding providers for this category. You can still request a quote and we will help connect you with relevant signage providers."}
+                : "Sign Zim is still adding providers for this category. You can still request a quote and we will help connect you with relevant companies."}
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Link href={quoteHref} className="primary-button">
@@ -220,7 +236,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
 
       <section className="page-shell pb-12">
         <div className="rounded-lg border border-white/10 bg-white/[0.045] p-6">
-          <h2 className="text-xl font-black text-white">Related signage services</h2>
+          <h2 className="text-xl font-black text-white">Related services</h2>
           <div className="mt-4 flex flex-wrap gap-2">
             {relatedServices.map((item) => (
               <Link

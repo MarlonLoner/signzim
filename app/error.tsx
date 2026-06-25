@@ -13,7 +13,7 @@ export default function ErrorPage({ reset }: { error: Error & { digest?: string 
           Something went wrong while loading Sign Zim.
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-zinc-400">
-          Please retry the page or return home to continue browsing signage companies.
+          Please retry the page or return home to continue browsing providers.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <button type="button" onClick={reset} className="primary-button">

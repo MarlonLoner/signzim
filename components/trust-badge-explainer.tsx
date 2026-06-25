@@ -12,14 +12,14 @@ export function TrustBadgeExplainer() {
           <ul className="mt-3 space-y-2 text-sm leading-6 text-zinc-300">
             <li>The listing has been reviewed by Sign Zim.</li>
             <li>The company has provided business and contact details.</li>
-            <li>Portfolio or service details have been checked where possible.</li>
+            <li>Portfolio or service details for signage, branding, deco, fitting or displays have been checked where possible.</li>
           </ul>
         </div>
         <div className="rounded-lg border border-amberglow/30 bg-amberglow/10 p-5">
           <Star className="h-6 w-6 text-amberglow" aria-hidden="true" />
           <h3 className="mt-4 text-lg font-black text-white">Featured Provider</h3>
           <ul className="mt-3 space-y-2 text-sm leading-6 text-zinc-300">
-            <li>The company receives higher visibility on marketplace pages.</li>
+            <li>The provider receives higher visibility on marketplace pages.</li>
             <li>Featured status does not mean Sign Zim guarantees every job.</li>
             <li>Customers should still review portfolios and confirm job details directly.</li>
           </ul>

@@ -5,15 +5,15 @@ import { FaqSection, providerFaqs } from "@/components/faq-section";
 import { TrustBadgeExplainer } from "@/components/trust-badge-explainer";
 
 export const metadata: Metadata = {
-  title: "For Signage Companies in Zimbabwe | Sign Zim",
+  title: "For Providers in Zimbabwe | Sign Zim",
   description:
-    "Get discovered by Zimbabwean customers looking for signage. List your signage company with services, contact details, portfolio images, verified badges, and featured placement options."
+    "Get discovered by Zimbabwean customers looking for signage, interior deco, branding, shop fitting, office fitting, displays and branded spaces."
 };
 
 const listingIncludes = [
   "Company profile with city, services, and contact person",
   "WhatsApp, email, website, and Facebook contact links",
-  "Portfolio gallery for shopfront signs, vehicle branding, lightboxes, billboards, banners, and vinyl",
+  "Portfolio gallery for shopfront signs, vehicle branding, interiors, counters, shelves, displays, partitions, and wall branding",
   "Visibility across company, service, and city marketplace pages"
 ];
 
@@ -25,7 +25,13 @@ const providerTypes = [
   "Lightbox fabricators",
   "Vinyl installers",
   "Branding studios",
-  "Event branding suppliers"
+  "Event branding suppliers",
+  "Interior deco providers",
+  "Shop fitting teams",
+  "Office fitting providers",
+  "Retail display suppliers",
+  "Counter and shelving fabricators",
+  "Partition installers"
 ];
 
 const packages = [
@@ -55,13 +61,14 @@ export default function ForSignageCompaniesPage() {
       <section className="border-b border-white/10 bg-white/[0.025]">
         <div className="page-shell grid gap-10 py-12 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">For signage companies</p>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">For providers</p>
             <h1 className="mt-4 max-w-4xl text-5xl font-black leading-tight text-white">
-              Get discovered by customers looking for signage in Zimbabwe.
+              Get discovered by customers looking for signage, interiors and fitting in Zimbabwe.
             </h1>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-zinc-300">
               Sign Zim gives providers a marketplace profile customers can inspect before they request shopfront signs,
-              vehicle branding, lightboxes, billboards, banners, vinyl, and installation work.
+              vehicle branding, lightboxes, branded interiors, shop fitting, office fitting, displays, counters and
+              installation work.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/list-your-company#submit-listing" className="primary-button">
@@ -78,7 +85,7 @@ export default function ForSignageCompaniesPage() {
             <h2 className="mt-5 text-2xl font-black text-white">Built to prove visibility.</h2>
             <p className="mt-3 text-sm leading-6 text-zinc-400">
               Admin metrics track profile views and WhatsApp clicks so Sign Zim can show early evidence of customer
-              attention for listed companies.
+              attention for listed providers.
             </p>
           </div>
         </div>
@@ -88,7 +95,7 @@ export default function ForSignageCompaniesPage() {
         <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="rounded-lg border border-amberglow/30 bg-amberglow/10 p-6">
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Who should list on Sign Zim?</p>
-            <h2 className="mt-4 text-2xl font-black text-white">If customers hire you for visible branding, you belong here.</h2>
+            <h2 className="mt-4 text-2xl font-black text-white">If customers hire you for visibility or branded spaces, you belong here.</h2>
             <p className="mt-3 text-sm leading-7 text-zinc-300">
               You do not need your own website to start. A Sign Zim listing can give customers one public profile with
               your services, city, WhatsApp number, contact person, and portfolio links while your own site is still
@@ -123,8 +130,9 @@ export default function ForSignageCompaniesPage() {
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Why Sign Zim exists</p>
             <h2 className="mt-4 text-2xl font-black text-white">Customers need faster shortlists.</h2>
             <p className="mt-3 text-sm leading-7 text-zinc-300">
-              SMEs, pharmacies, restaurants, lodges, schools, churches, and growing businesses often need signage
-              quickly. Sign Zim helps them compare providers by service, location, portfolio, and trust signals.
+              SMEs, pharmacies, restaurants, lodges, schools, churches, salons, clinics and growing businesses often
+              need signage, branded interiors, counters, shelving, partitions or displays quickly. Sign Zim helps them
+              compare providers by service, location, portfolio, and trust signals.
             </p>
           </div>
         </div>
@@ -166,7 +174,7 @@ export default function ForSignageCompaniesPage() {
       </section>
 
       <section className="page-shell pb-12">
-        <FaqSection eyebrow="Provider FAQ" title="Questions from signage companies" items={providerFaqs} />
+        <FaqSection eyebrow="Provider FAQ" title="Questions from providers" items={providerFaqs} />
       </section>
     </div>
   );

@@ -1,6 +1,6 @@
 # Sign Zim
 
-Sign Zim is a Zimbabwe-focused marketplace for signage companies. Customers can browse providers, compare services and portfolios, and request signage quotes. Admin can review listings, manage trust badges, and route quote leads.
+Sign Zim is a Zimbabwe-focused marketplace for signage, branding, interior deco and fitting providers. Customers can browse providers, compare services and portfolios, and request project quotes. Admin can review listings, manage trust badges, and route quote leads.
 
 ## Setup
 

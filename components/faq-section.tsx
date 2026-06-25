@@ -7,35 +7,35 @@ export const customerFaqs: FaqItem[] = [
   {
     question: "What is Sign Zim?",
     answer:
-      "Sign Zim is a Zimbabwean signage marketplace that helps businesses find signage companies, compare portfolios, and request quotes in one place."
+      "Sign Zim is a Zimbabwean marketplace that helps businesses find signage, branding, interior deco and fitting providers, compare portfolios, and request quotes in one place."
   },
   {
-    question: "Can I request a quote from multiple signage providers?",
+    question: "Can I request a quote from multiple providers?",
     answer:
       "Yes. You can send one quote request with your service, city, budget, and timeline so Sign Zim can help connect the request with relevant providers."
   },
   {
-    question: "Does Sign Zim make the signs?",
+    question: "Does Sign Zim do the production or fitting work?",
     answer:
-      "No. Sign Zim helps customers discover and contact signage providers. The provider handles pricing, production, installation, and job delivery directly."
+      "No. Sign Zim helps customers discover and contact providers. The provider handles pricing, production, installation, fitting, and job delivery directly."
   },
   {
-    question: "How do I choose the right signage company?",
+    question: "How do I choose the right provider?",
     answer:
-      "Review the company profile, services, city, portfolio images, verification status, and response quality before agreeing to pricing or timelines."
+      "Review the company profile, services, city, portfolio images, verification status, and response quality before agreeing to pricing, measurements, production, fitting, or timelines."
   },
   {
     question: "Is it free to request a quote?",
     answer:
-      "Yes. Customers can submit a signage quote request for free while Sign Zim builds the marketplace."
+      "Yes. Customers can submit a signage, branding, deco, display or fitting quote request for free while Sign Zim builds the marketplace."
   }
 ];
 
 export const providerFaqs: FaqItem[] = [
   {
-    question: "How do I list my signage company?",
+    question: "How do I list my company?",
     answer:
-      "Use the List Your Company form to submit your business details, services, contacts, city, and portfolio links for review."
+      "Use the List Your Company form to submit your signage, deco, fitting, print, branding or display business details, services, contacts, city, and portfolio links for review."
   },
   {
     question: "What happens after I submit my listing?",

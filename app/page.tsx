@@ -15,15 +15,15 @@ import {
 import { CompanyCard } from "@/components/company-card";
 import { FaqSection, customerFaqs } from "@/components/faq-section";
 import { SectionHeading } from "@/components/section-heading";
-import { cityCatalog, cities, serviceCatalog } from "@/lib/data";
+import { cityCatalog, cities, groupedServiceCatalog, serviceCatalog } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Sign Zim | Find Signage Companies in Zimbabwe",
+  title: "Sign Zim | Signage, Interior Deco & Fitting Providers in Zimbabwe",
   description:
-    "Find signage companies in Zimbabwe, compare portfolios, and request quotes for shopfront signs, lightboxes, vehicle branding, billboards, banners, vinyl, 3D signs and more."
+    "Find signage companies, interior deco providers, shop fitters, office fitters and branding suppliers in Zimbabwe. Compare portfolios and request quotes."
 };
 
 async function getFeaturedCompanies() {
@@ -64,11 +64,11 @@ export default async function HomePage() {
               Your next sign starts here.
             </div>
             <h1 className="max-w-4xl text-5xl font-black leading-[1.02] text-white sm:text-6xl lg:text-7xl">
-              Find trusted signage companies in Zimbabwe.
+              Find signage, interior deco, and fitting providers in Zimbabwe.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-200">
-              Find signage companies in Zimbabwe, compare portfolios, and request quotes for shopfront signs,
-              lightboxes, vehicle branding, billboards, banners, vinyl, 3D signs and more.
+              Compare providers, view portfolios, and request quotes for shopfront signs, vehicle branding, lightboxes,
+              interior deco, shop fitting, office fitting, reception branding, wall branding, displays, counters and more.
             </p>
 
             <form action="/companies" className="mt-10 rounded-lg border border-white/10 bg-black/65 p-3 shadow-glow backdrop-blur">
@@ -98,10 +98,14 @@ export default async function HomePage() {
                 </label>
                 <select id="home-service" name="service" className="input">
                   <option value="">All services</option>
-                  {serviceCatalog.map((service) => (
-                    <option key={service.slug} value={service.slug}>
-                      {service.name}
-                    </option>
+                  {groupedServiceCatalog.map(({ group, services }) => (
+                    <optgroup key={group} label={group}>
+                      {services.map((service) => (
+                        <option key={service.slug} value={service.slug}>
+                          {service.name}
+                        </option>
+                      ))}
+                    </optgroup>
                   ))}
                 </select>
                 <button className="primary-button" type="submit">
@@ -146,7 +150,7 @@ export default async function HomePage() {
         <div className="page-shell flex flex-col gap-4 py-5 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Launch update</p>
-            <h2 className="mt-1 text-2xl font-black text-white">Now onboarding signage companies across Zimbabwe.</h2>
+            <h2 className="mt-1 text-2xl font-black text-white">Now onboarding signage, deco and fitting providers across Zimbabwe.</h2>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link href="/list-your-company#submit-listing" className="primary-button">
@@ -164,9 +168,9 @@ export default async function HomePage() {
       <section className="page-shell py-16">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
-            eyebrow="Popular signage services"
-            title="Find the right production team by sign type."
-            copy="Start with the type of sign you need, then compare approved providers by city, portfolio quality, badges, and contact availability."
+            eyebrow="Popular services"
+            title="From signs outside to customer experience inside."
+            copy="Start with the service you need, then compare approved providers by city, portfolio quality, badges, and contact availability."
           />
           <Link href="/services" className="secondary-button w-fit">
             View Services
@@ -175,7 +179,7 @@ export default async function HomePage() {
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {serviceCatalog.slice(0, 8).map((service) => (
+          {serviceCatalog.slice(0, 12).map((service) => (
             <Link
               key={service.slug}
               href={`/services/${service.slug}`}
@@ -185,6 +189,7 @@ export default async function HomePage() {
                 <BadgeCheck className="h-5 w-5" aria-hidden="true" />
               </div>
               <h3 className="text-lg font-black text-white">{service.name}</h3>
+              <p className="mt-1 text-xs font-bold uppercase tracking-[0.12em] text-honey">{service.group}</p>
               <p className="mt-3 line-clamp-3 text-sm leading-6 text-zinc-400">{service.description}</p>
             </Link>
           ))}
@@ -195,8 +200,8 @@ export default async function HomePage() {
         <div className="page-shell">
           <SectionHeading
             eyebrow="Why use Sign Zim?"
-            title="A faster way to shortlist signage providers."
-            copy="Sign Zim is built around the questions customers ask before spending on signage: who can do the work, where are they based, what have they produced, and how quickly can I reach them?"
+            title="A faster way to shortlist visibility and space providers."
+            copy="Sign Zim is built around the questions customers ask before investing in signs, branded interiors, displays, counters or fitting: who can do the work, where are they based, what have they produced, and how quickly can I reach them?"
           />
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {[
@@ -261,7 +266,7 @@ export default async function HomePage() {
         <SectionHeading eyebrow="How it works" title="From search to quote request in minutes." />
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {[
-            ["Search", "Filter signage providers by city, service, portfolio strength, and verification."],
+            ["Search", "Filter providers by city, service, portfolio strength, and verification."],
             ["Compare", "Open profiles, inspect galleries, and check contact details before reaching out."],
             ["Request", "Send a quote request or message a company directly through WhatsApp."]
           ].map(([title, copy], index) => (
@@ -281,12 +286,12 @@ export default async function HomePage() {
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">About Sign Zim</p>
             <h2 className="mt-4 max-w-3xl text-3xl font-black text-white">
-              A Zimbabwean marketplace for faster signage shortlists.
+              A Zimbabwean marketplace for business visibility and branded spaces.
             </h2>
             <p className="mt-4 max-w-4xl text-sm leading-7 text-zinc-300">
-              Sign Zim is a Zimbabwean marketplace helping businesses find signage companies faster. From shopfront
-              signs and vehicle branding to billboards, lightboxes, banners and vinyl, the platform helps customers
-              compare providers and request quotes in one place.
+              Sign Zim helps businesses find signage, branding, interior deco and fitting providers faster. From
+              shopfront signs and vehicle branding to branded interiors, counters, shelving, displays and reception
+              spaces, the platform helps customers compare providers and request quotes in one place.
             </p>
           </div>
           <Link href="/about" className="secondary-button w-fit">
@@ -300,14 +305,14 @@ export default async function HomePage() {
         <div className="page-shell grid gap-8 lg:grid-cols-2">
           <div className="rounded-lg border border-white/10 bg-white/[0.045] p-7">
             <Building2 className="h-7 w-7 text-amberglow" aria-hidden="true" />
-            <h2 className="mt-5 text-3xl font-black text-white">For signage companies</h2>
+            <h2 className="mt-5 text-3xl font-black text-white">For providers</h2>
             <p className="mt-4 text-sm leading-7 text-zinc-300">
-              Create a profile that shows your services, city, contact person, WhatsApp number, and portfolio links.
-              Approved listings can be marked verified or featured by the owner.
+              Create a profile that shows your services, city, contact person, WhatsApp number, and portfolio links for
+              signage, deco, fitting, print, display, or branded space work.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/for-signage-companies" className="primary-button">
-                For Signage Companies
+                For Providers
               </Link>
               <Link href="/list-your-company" className="secondary-button">
                 List Your Company
@@ -333,11 +338,11 @@ export default async function HomePage() {
 
       <section className="page-shell py-16">
         <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
-          <FaqSection eyebrow="Customer FAQ" title="Before you request a signage quote" items={customerFaqs} />
+          <FaqSection eyebrow="Customer FAQ" title="Before you request a project quote" items={customerFaqs} />
           <div className="rounded-lg border border-white/10 bg-white/[0.045] p-6">
             <h2 className="text-2xl font-black text-white">Questions from providers?</h2>
             <p className="mt-3 text-sm leading-6 text-zinc-400">
-              Signage companies can see package positioning, approval rules, and provider-specific FAQ on the launch
+              Providers can see package positioning, approval rules, and provider-specific FAQ on the launch
               sales page.
             </p>
             <Link href="/for-signage-companies" className="primary-button mt-6 w-fit">
@@ -351,7 +356,7 @@ export default async function HomePage() {
       <section className="page-shell pb-16">
         <div className="grid gap-4 rounded-lg border border-amberglow/30 bg-amberglow/10 p-6 md:grid-cols-[1fr_auto_auto] md:items-center">
           <div>
-            <h2 className="text-2xl font-black text-white">Ready to start a signage project?</h2>
+            <h2 className="text-2xl font-black text-white">Ready to start a signage, deco or fitting project?</h2>
             <p className="mt-2 text-sm text-zinc-300">Send the job details once and manage the lead from the admin dashboard.</p>
           </div>
           <Link href="/request-quote" className="primary-button">

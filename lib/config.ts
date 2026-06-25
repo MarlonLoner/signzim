@@ -17,7 +17,11 @@ export function getServerConfigStatus() {
 
 function normalizeAppUrl(value: string) {
   const trimmed = value.trim().replace(/\/+$/, "");
-  return trimmed || "http://127.0.0.1:3000";
+  if (!trimmed) {
+    return "http://127.0.0.1:3000";
+  }
+
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
 }
 
 export function absoluteUrl(path = "/") {

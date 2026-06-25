@@ -5,13 +5,13 @@ import { SiteFooter } from "@/components/site-footer";
 import { appConfig } from "@/lib/config";
 
 const siteDescription =
-  "Zimbabwe's marketplace for signage companies. Find trusted providers for billboards, lightboxes, vehicle branding, 3D signs, banners, vinyl, and more.";
+  "Find signage, interior deco, branding and fitting providers in Zimbabwe. Compare portfolios and request quotes for shopfront signs, branded spaces, displays, counters and more.";
 const ogImage = "/images/sign-zim-hero.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL(appConfig.appUrl),
   title: {
-    default: "Sign Zim | Zimbabwe Signage Marketplace",
+    default: "Sign Zim | Signage, Interior Deco & Fitting Providers in Zimbabwe",
     template: "%s | Sign Zim"
   },
   description: siteDescription,
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     canonical: "/"
   },
   openGraph: {
-    title: "Sign Zim | Zimbabwe Signage Marketplace",
+    title: "Sign Zim | Signage, Interior Deco & Fitting Providers in Zimbabwe",
     description: siteDescription,
     url: appConfig.appUrl,
     siteName: appConfig.appName,
@@ -28,14 +28,14 @@ export const metadata: Metadata = {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Sign Zim, Zimbabwe's marketplace for signage companies"
+        alt: "Sign Zim, Zimbabwe's marketplace for signage, deco and fitting providers"
       }
     ],
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sign Zim | Zimbabwe Signage Marketplace",
+    title: "Sign Zim | Signage, Interior Deco & Fitting Providers in Zimbabwe",
     description: siteDescription,
     images: [ogImage]
   }

@@ -35,7 +35,7 @@ import {
 } from "@/lib/actions";
 import { hasAdminAccess, isAdminKeyConfigured } from "@/lib/admin-auth";
 import { appConfig, getServerConfigStatus } from "@/lib/config";
-import { cities, companyStatuses, leadStatuses, packageOptions, paymentStatuses, serviceCatalog } from "@/lib/data";
+import { cities, companyStatuses, groupedServiceCatalog, leadStatuses, packageOptions, paymentStatuses } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
 import type { CompanyWithServices } from "@/lib/types";
 import { formatDate, leadWhatsAppMessage } from "@/lib/utils";
@@ -44,7 +44,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Sign Zim Admin",
-  description: "Manage Sign Zim company submissions, trust badges, featured listings, and customer signage quote leads."
+  description: "Manage Sign Zim provider submissions, trust badges, featured listings, and customer quote leads."
 };
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -383,17 +383,24 @@ function CompanyEditor({ company }: { company: CompanyWithServices }) {
         <fieldset className="field">
           <legend className="label">Services</legend>
           <div className="grid gap-2 md:grid-cols-2">
-            {serviceCatalog.map((service) => (
-              <label key={service.slug} className="checkbox-card">
-                <input
-                  type="checkbox"
-                  name="services"
-                  value={service.slug}
-                  defaultChecked={serviceSlugs.has(service.slug)}
-                  className="mt-1 h-4 w-4 rounded border-white/20 bg-black text-amberglow focus:ring-amberglow"
-                />
-                <span className="font-semibold text-white">{service.name}</span>
-              </label>
+            {groupedServiceCatalog.map(({ group, services }) => (
+              <div key={group} className="grid gap-2 md:col-span-2">
+                <h4 className="text-sm font-black text-honey">{group}</h4>
+                <div className="grid gap-2 md:grid-cols-2">
+                  {services.map((service) => (
+                    <label key={service.slug} className="checkbox-card">
+                      <input
+                        type="checkbox"
+                        name="services"
+                        value={service.slug}
+                        defaultChecked={serviceSlugs.has(service.slug)}
+                        className="mt-1 h-4 w-4 rounded border-white/20 bg-black text-amberglow focus:ring-amberglow"
+                      />
+                      <span className="font-semibold text-white">{service.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </fieldset>
@@ -505,16 +512,28 @@ function OutreachCopySection({ companies }: { companies: CompanyWithServices[] }
       text: `Hi [Company Name], we're building Sign Zim, a Zimbabwean marketplace where customers can find signage companies, view portfolios, and request quotes. You can submit your company listing here: ${listUrl}`
     },
     {
+      title: "Invite an interior deco provider",
+      text: `Hi [Company Name], we're building Sign Zim, a Zimbabwean marketplace where customers can find interior deco, branded space and wall branding providers, view portfolios, and request quotes. You can submit your company listing here: ${listUrl}`
+    },
+    {
+      title: "Invite a shop fitting provider",
+      text: `Hi [Company Name], we're building Sign Zim, a Zimbabwean marketplace where customers can find shop fitting, office fitting, counters, shelving, displays and branded space providers. You can submit your company listing here: ${listUrl}`
+    },
+    {
+      title: "Invite a general provider",
+      text: `Hi [Company Name], we're building Sign Zim, a Zimbabwean marketplace where customers can find signage, interior deco, branding and fitting providers, view portfolios, and request quotes. You can submit your company listing here: ${listUrl}`
+    },
+    {
       title: "Pitch a verified listing",
       text: `Hi [Company Name], Sign Zim verified listings are designed to help customers trust your provider profile before they contact you. A verified profile can show reviewed business details, services, contact channels, and portfolio links. Learn more here: ${providerUrl}`
     },
     {
       title: "Pitch a featured listing",
-      text: `Hi [Company Name], Sign Zim featured listings receive higher visibility on marketplace pages, helping your signage work appear ahead of standard listings. Featured placement is built for providers who want more customer attention and quote requests. Learn more here: ${providerUrl}`
+      text: `Hi [Company Name], Sign Zim featured listings receive higher visibility on marketplace pages, helping your signage, branding, interior or fitting work appear ahead of standard listings. Featured placement is built for providers who want more customer attention and quote requests. Learn more here: ${providerUrl}`
     },
     {
       title: "Follow up after a company submits",
-      text: "Hi [Company Name], thanks for submitting your Sign Zim listing. We are reviewing your services, contact details, and portfolio information. Once approved, your profile can appear on Sign Zim for customers looking for signage providers in Zimbabwe."
+      text: "Hi [Company Name], thanks for submitting your Sign Zim listing. We are reviewing your services, contact details, and portfolio information. Once approved, your profile can appear on Sign Zim for customers looking for providers in Zimbabwe."
     },
     {
       title: "Claim listing URL format",
@@ -556,7 +575,7 @@ function OutreachCopySection({ companies }: { companies: CompanyWithServices[] }
           </div>
           {companies.length ? (
             <div className="mt-5">
-              <p className="text-sm font-bold text-white">Claim links for approved companies</p>
+              <p className="text-sm font-bold text-white">Claim links for approved providers</p>
               <div className="mt-3 grid gap-3 lg:grid-cols-2">
                 {companies.slice(0, 6).map((company) => {
                   const claimUrl = `${appConfig.appUrl}/list-your-company?claim=${company.slug}`;
@@ -612,10 +631,10 @@ function LaunchSnapshotSection({
   topByViews?: CompanyWithServices;
 }) {
   const snapshot = [
-    ["Total approved companies", approvedCompanies.length],
-    ["Pending companies", pendingCompanies.length],
-    ["Featured companies", featuredCompanies.length],
-    ["Verified companies", verifiedCompanies.length],
+    ["Total approved providers", approvedCompanies.length],
+    ["Pending providers", pendingCompanies.length],
+    ["Featured providers", featuredCompanies.length],
+    ["Verified providers", verifiedCompanies.length],
     ["Total quote requests", leads.length],
     ["New quote requests", newLeads.length],
     ["Total profile views", totalProfileViews],
@@ -800,12 +819,12 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
       note: `Public URL resolves to ${appConfig.appUrl}.`
     },
     {
-      label: "Add at least 5 approved companies",
+      label: "Add at least 5 approved providers",
       complete: approvedCompanies.length >= 5,
       note: `${approvedCompanies.length} approved compan${approvedCompanies.length === 1 ? "y" : "ies"} ready.`
     },
     {
-      label: "Add at least 3 verified companies",
+      label: "Add at least 3 verified providers",
       complete: verifiedCompanies.length >= 3,
       note: `${verifiedCompanies.length} verified compan${verifiedCompanies.length === 1 ? "y" : "ies"} ready.`
     },
@@ -837,10 +856,10 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
   ];
 
   const stats = [
-    { label: "Pending companies", value: pendingCompanies.length, icon: Clock },
-    { label: "Approved companies", value: approvedCompanies.length, icon: Building2 },
-    { label: "Featured companies", value: featuredCompanies.length, icon: Star },
-    { label: "Verified companies", value: verifiedCompanies.length, icon: BadgeCheck },
+    { label: "Pending providers", value: pendingCompanies.length, icon: Clock },
+    { label: "Approved providers", value: approvedCompanies.length, icon: Building2 },
+    { label: "Featured providers", value: featuredCompanies.length, icon: Star },
+    { label: "Verified providers", value: verifiedCompanies.length, icon: BadgeCheck },
     { label: "New leads", value: newLeads.length, icon: MessageCircle },
     { label: "Contacted leads", value: contactedLeads.length, icon: Send },
     { label: "Closed leads", value: closedLeads.length, icon: CheckCircle2 },
@@ -855,7 +874,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Owner dashboard</p>
           <h1 className="mt-4 text-5xl font-black text-white">Admin</h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-zinc-300">
-            Approve listings, maintain trust badges, manage featured placements, and move customer leads through the
+            Approve provider listings, maintain trust badges, manage featured placements, and move customer leads through the
             pipeline.
           </p>
         </div>
@@ -913,7 +932,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
       <OutreachCopySection companies={approvedCompanies} />
 
       <section className="mt-12">
-        <h2 className="text-2xl font-black text-white">Pending company submissions</h2>
+        <h2 className="text-2xl font-black text-white">Pending provider submissions</h2>
         <div className="mt-5 grid gap-5">
           {pendingCompanies.length ? (
             pendingCompanies.map((company) => <AdminCompanyCard key={company.id} company={company} />)
@@ -924,7 +943,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
       </section>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-black text-white">Approved companies</h2>
+        <h2 className="text-2xl font-black text-white">Approved providers</h2>
         {archivedCompanies.length ? (
           <p className="mt-2 text-sm text-zinc-400">
             {archivedCompanies.length} rejected or archived listing{archivedCompanies.length === 1 ? "" : "s"} are
@@ -935,7 +954,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
           {approvedCompanies.length ? (
             approvedCompanies.map((company) => <AdminCompanyCard key={company.id} company={company} />)
           ) : (
-            <div className="panel rounded-lg p-6 text-sm text-zinc-400">No approved companies yet.</div>
+            <div className="panel rounded-lg p-6 text-sm text-zinc-400">No approved providers yet.</div>
           )}
         </div>
       </section>
@@ -1010,7 +1029,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
                         rows={4}
                         className="input"
                         defaultValue={lead.adminNotes ?? ""}
-                        placeholder="Follow up Friday. Customer needs measurements. Routed to two vehicle branding providers."
+                        placeholder="Follow up Friday. Customer needs measurements. Routed to two relevant providers."
                       />
                       <button type="submit" className="primary-button w-fit">
                         <StickyNote className="h-4 w-4" aria-hidden="true" />

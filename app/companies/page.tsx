@@ -4,7 +4,7 @@ import { Filter, Search, X } from "lucide-react";
 import { CompanyCard } from "@/components/company-card";
 import { SectionHeading } from "@/components/section-heading";
 import { TrustBadgeExplainer } from "@/components/trust-badge-explainer";
-import { cities, serviceCatalog } from "@/lib/data";
+import { cities, groupedServiceCatalog } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
 import { getServiceBySlug } from "@/lib/utils";
 import type { Prisma } from "@prisma/client";
@@ -12,9 +12,9 @@ import type { Prisma } from "@prisma/client";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Signage Companies in Zimbabwe | Sign Zim",
+  title: "Signage, Deco & Fitting Providers in Zimbabwe | Sign Zim",
   description:
-    "Browse approved signage companies in Zimbabwe by city, service, verification status, and portfolio quality. Request quotes for shopfront signs, vehicle branding, lightboxes, billboards, vinyl, banners, and more."
+    "Browse approved signage, branding, interior deco, shop fitting, office fitting and display providers in Zimbabwe by city, service, verification status, and portfolio quality."
 };
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -101,7 +101,7 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Se
       <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <SectionHeading
           eyebrow="Directory"
-          title="Approved signage companies across Zimbabwe."
+          title="Approved visibility and space providers across Zimbabwe."
           copy="Filter by service, city, company name, or verification status."
         />
         <div className="rounded-lg border border-white/10 bg-white/[0.045] px-5 py-4 text-sm text-zinc-300">
@@ -137,10 +137,14 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Se
           </label>
           <select id="service" name="service" defaultValue={service} className="input">
             <option value="">All services</option>
-            {serviceCatalog.map((item) => (
-              <option key={item.slug} value={item.slug}>
-                {item.name}
-              </option>
+            {groupedServiceCatalog.map(({ group, services }) => (
+              <optgroup key={group} label={group}>
+                {services.map((item) => (
+                  <option key={item.slug} value={item.slug}>
+                    {item.name}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
           <label className="sr-only" htmlFor="sort">
@@ -203,7 +207,7 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Se
           <p className="mt-2 text-sm text-zinc-400">
             {error
               ? "We're loading provider data. Please try again shortly."
-              : "Sign Zim is still onboarding providers in this category. Submit a quote request and we will help connect you with relevant signage companies."}
+              : "Sign Zim is still onboarding providers in this category. Submit a quote request and we will help connect you with relevant companies."}
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link href="/companies" className="primary-button">

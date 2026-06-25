@@ -20,10 +20,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { citySlug } = await params;
   const city = getCityBySlug(citySlug);
-  const title = city ? `Signage Companies in ${city.name} | Sign Zim` : "Signage Companies by City | Sign Zim";
+  const title = city
+    ? `Signage, Deco & Fitting Providers in ${city.name} | Sign Zim`
+    : "Signage, Deco & Fitting Providers by City | Sign Zim";
   const description = city
-    ? `Find signage companies in ${city.name}, compare portfolios, and request quotes for shopfront signs, lightboxes, vehicle branding, billboards, vinyl, banners, and 3D signs.`
-    : "Find Zimbabwean signage companies by city and request quotes through Sign Zim.";
+    ? `Find signage, branding, deco and fitting providers in ${city.name}. Compare portfolios and request quotes for shopfront signs, branded interiors, displays, counters, partitions and more.`
+    : "Find Zimbabwean signage, branding, interior deco and fitting providers by city and request quotes through Sign Zim.";
   const url = absoluteUrl(city ? `/cities/${city.slug}` : "/companies");
   const image = "/images/sign-zim-hero.png";
 
@@ -37,7 +39,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       title,
       description,
       url,
-      images: [{ url: image, width: 1200, height: 630, alt: "Sign Zim city signage directory" }]
+      images: [{ url: image, width: 1200, height: 630, alt: "Sign Zim city provider directory" }]
     },
     twitter: {
       card: "summary_large_image",
@@ -72,14 +74,14 @@ async function getCityCompanies(city: string) {
 function getCitySeoContent(cityName: string) {
   return {
     needs: [
-      "Shopfront signs for retail, restaurants, pharmacies, schools, and offices",
+      "Shopfront signs, branded interiors and reception areas for retail, restaurants, pharmacies, schools, and offices",
       "Vehicle branding and decals for delivery teams, fleets, and service businesses",
-      "Outdoor visibility through billboards, banners, lightboxes, and event branding"
+      "Outdoor visibility and customer-facing spaces through billboards, banners, lightboxes, displays, counters, shelves and event branding"
     ],
     questions: [
       `Can the provider visit or install in ${cityName}?`,
-      "Can they share recent portfolio work for similar signage jobs?",
-      "Are artwork, measurements, production, transport, and installation included in the quote?"
+      "Can they share recent portfolio work for similar signs, interiors, displays, or fitting jobs?",
+      "Are artwork, measurements, production, transport, fitting, and installation included in the quote?"
     ]
   };
 }
@@ -99,11 +101,11 @@ export default async function CityPage({ params }: { params: Params }) {
           <div className="grid gap-8 lg:grid-cols-[1fr_340px] lg:items-end">
             <SectionHeading
               eyebrow="City directory"
-              title={city ? `Signage companies in ${city.name}` : "Signage companies by city"}
+              title={city ? `Signage, branding, deco and fitting providers in ${city.name}` : "Providers by city"}
               copy={
                 city
-                  ? `Compare approved signage providers in ${city.name}, inspect portfolios, and request quotes for commercial signs, branding, print, and installation.`
-                  : "Browse Zimbabwean signage providers by city."
+                  ? `Compare approved providers in ${city.name}, inspect portfolios, and request quotes for commercial signs, branding, interiors, displays, counters and fitting.`
+                  : "Browse Zimbabwean providers by city."
               }
             />
             <div className="panel rounded-lg p-5">
@@ -118,7 +120,7 @@ export default async function CityPage({ params }: { params: Params }) {
                 <div className="mt-4">
                   <ShareActions
                     url={pageUrl}
-                    whatsappText={`Find signage companies in ${city.name} on Sign Zim: ${pageUrl}`}
+                    whatsappText={`Find signage, deco and fitting providers in ${city.name} on Sign Zim: ${pageUrl}`}
                     label="Share city page"
                   />
                 </div>
@@ -144,7 +146,7 @@ export default async function CityPage({ params }: { params: Params }) {
             <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
               {error
                 ? "We're loading provider data. Please try again shortly."
-                : "Sign Zim is still adding providers for this city. You can still request a quote and we will help connect you with relevant signage providers."}
+                : "Sign Zim is still adding providers for this city. You can still request a quote and we will help connect you with relevant companies."}
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Link href={quoteHref} className="primary-button">
@@ -162,7 +164,7 @@ export default async function CityPage({ params }: { params: Params }) {
         <section className="page-shell pb-12">
           <div className="grid gap-5 lg:grid-cols-3">
             <div className="rounded-lg border border-white/10 bg-white/[0.045] p-6 lg:col-span-2">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Signage needs in {city.name}</p>
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Business visibility and space needs in {city.name}</p>
               <h2 className="mt-4 text-2xl font-black text-white">Compare local providers before you request a quote.</h2>
               <div className="mt-5 grid gap-3 md:grid-cols-3">
                 {cityContent.needs.map((item) => (

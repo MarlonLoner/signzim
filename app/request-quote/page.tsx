@@ -3,14 +3,14 @@ import Link from "next/link";
 import { CheckCircle2, ImagePlus, MessageCircle, TriangleAlert } from "lucide-react";
 import { createLead } from "@/lib/actions";
 import { appConfig } from "@/lib/config";
-import { budgetRanges, cities, cityCatalog, serviceCatalog, timelines } from "@/lib/data";
+import { budgetRanges, cities, cityCatalog, groupedServiceCatalog, serviceCatalog, timelines } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
 import { leadWhatsAppMessage, whatsappLink } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Request a Signage Quote | Sign Zim",
+  title: "Request a Signage, Deco or Fitting Quote | Sign Zim",
   description:
-    "Request signage quotes in Zimbabwe for shopfront signs, lightboxes, vehicle branding, billboards, banners, vinyl, 3D signs, and more."
+    "Request quotes in Zimbabwe for signage, interior deco, shop fitting, office fitting, wall branding, retail displays, counters, shelving, and more."
 };
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -93,7 +93,7 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
         <h1 className="mt-4 text-5xl font-black leading-tight text-white">Request a Quote</h1>
         <p className="mt-5 text-lg leading-8 text-zinc-300">
           Send one request with your project details, location, budget, and timeline so Sign Zim can help you reach
-          relevant signage providers faster.
+          relevant signage, branding, interior deco, and fitting providers faster.
         </p>
         <div className="panel mt-8 rounded-lg p-6">
           <div className="flex items-start gap-4">
@@ -113,6 +113,9 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
           <div className="mt-4 grid gap-3 text-sm leading-6 text-zinc-400">
             <p>Example: I need a 3m x 1m lightbox for a pharmacy in Avondale.</p>
             <p>Example: I need vehicle branding for 3 delivery cars.</p>
+            <p>Example: I need interior deco and wall branding for a salon.</p>
+            <p>Example: I need counters, shelving and signage for a pharmacy.</p>
+            <p>Example: I need office partitions and reception branding.</p>
           </div>
         </div>
       </aside>
@@ -125,14 +128,14 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
               <div>
                 <h2 className="text-lg font-black text-white">Your quote request has been received.</h2>
                 <p className="mt-2 leading-6">
-                  Sign Zim will connect your request with relevant signage providers.
+                  Sign Zim will connect your request with relevant providers.
                 </p>
               </div>
             </div>
             <dl className="mt-5 grid gap-3 rounded-md border border-white/10 bg-black/25 p-4 text-zinc-200 sm:grid-cols-2">
               <div>
                 <dt className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-200">Service</dt>
-                <dd className="mt-1">{summary.serviceNeeded || "Signage project"}</dd>
+                <dd className="mt-1">{summary.serviceNeeded || "Signage, deco or fitting project"}</dd>
               </div>
               <div>
                 <dt className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-200">City</dt>
@@ -182,7 +185,7 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
           {!preferredCompany && (selectedService || selectedCity) ? (
             <div className="rounded-lg border border-white/10 bg-white/[0.045] p-4 text-sm leading-6 text-zinc-300">
               <span className="font-bold text-white">Request context:</span>{" "}
-              {selectedService ? `${selectedService.name} quote` : "Signage quote"}
+              {selectedService ? `${selectedService.name} quote` : "Project quote"}
               {selectedCity ? ` in ${selectedCity.name}` : ""}. This context is saved in admin as lead source{" "}
               <span className="font-mono text-honey">{leadSource}</span>.
             </div>
@@ -225,10 +228,14 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
                 <option value="" disabled>
                   Select service
                 </option>
-                {serviceCatalog.map((service) => (
-                  <option key={service.slug} value={service.name}>
-                    {service.name}
-                  </option>
+                {groupedServiceCatalog.map(({ group, services }) => (
+                  <optgroup key={group} label={group}>
+                    {services.map((service) => (
+                      <option key={service.slug} value={service.name}>
+                        {service.name}
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </select>
             </label>
@@ -255,7 +262,7 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
               minLength={12}
               rows={5}
               className="input"
-              placeholder="Example: I need a 3m x 1m lightbox for a pharmacy in Avondale, including design, production, and installation."
+              placeholder="Example: I need counters, shelving, wall branding and a shopfront sign for a pharmacy in Avondale."
             />
           </label>
 
