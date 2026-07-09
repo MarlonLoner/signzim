@@ -11,7 +11,14 @@
 }
 
 html {
+  max-width: 100%;
+  overflow-x: clip;
   scroll-behavior: smooth;
+}
+
+body {
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -46,20 +53,28 @@ button,
 input,
 select,
 textarea {
+  max-width: 100%;
   font: inherit;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
 }
 
 @layer components {
   .page-shell {
-    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full min-w-0 max-w-7xl px-4 sm:px-6 lg:px-8;
   }
 
   .panel {
-    @apply border border-white/10 bg-white/[0.045] shadow-2xl shadow-black/30 backdrop-blur;
+    @apply min-w-0 border border-white/10 bg-white/[0.045] shadow-2xl shadow-black/30 backdrop-blur;
   }
 
   .field {
-    @apply space-y-2;
+    @apply min-w-0 space-y-2;
   }
 
   .label {
@@ -67,11 +82,11 @@ textarea {
   }
 
   .input {
-    @apply w-full rounded-md border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-500 focus:border-amberglow focus:ring-2 focus:ring-amberglow/20;
+    @apply min-w-0 w-full rounded-md border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-500 focus:border-amberglow focus:ring-2 focus:ring-amberglow/20;
   }
 
   .checkbox-card {
-    @apply flex cursor-pointer items-start gap-3 rounded-md border border-white/10 bg-black/30 px-4 py-3 text-sm text-zinc-200 transition hover:border-amberglow/60 hover:bg-amberglow/10;
+    @apply flex min-w-0 cursor-pointer items-start gap-3 rounded-md border border-white/10 bg-black/30 px-4 py-3 text-sm text-zinc-200 transition hover:border-amberglow/60 hover:bg-amberglow/10;
   }
 
   .primary-button {
@@ -83,6 +98,7 @@ textarea {
   }
 
   .icon-button {
-    @apply inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/10 bg-white/5 text-zinc-100 transition hover:border-amberglow/60 hover:bg-amberglow/10;
+    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-white/10 bg-white/5 text-zinc-100 transition hover:border-amberglow/60 hover:bg-amberglow/10;
   }
 }
+
