@@ -8,7 +8,7 @@ export type UploadResult = {
   url: string;
 } | {
   ok: false;
-  error: "missing-token" | "invalid-type" | "too-large" | "upload-failed";
+  error: "missing-credentials" | "invalid-type" | "too-large" | "upload-failed";
 };
 
 function hasFile(value: FormDataEntryValue | null): value is File {
@@ -20,8 +20,11 @@ export function getUploadedFiles(formData: FormData, key: string) {
 }
 
 export async function uploadImageFile(file: File, folder: string): Promise<UploadResult> {
-  if (!process.env.BLOB_READ_WRITE_TOKEN?.trim()) {
-    return { ok: false, error: "missing-token" };
+  const hasOidcCredentials = Boolean(process.env.BLOB_STORE_ID?.trim() && process.env.VERCEL_OIDC_TOKEN?.trim());
+  const hasReadWriteToken = Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim());
+
+  if (!hasOidcCredentials && !hasReadWriteToken) {
+    return { ok: false, error: "missing-credentials" };
   }
 
   if (!allowedTypes.has(file.type)) {
@@ -46,3 +49,4 @@ export async function uploadImageFile(file: File, folder: string): Promise<Uploa
     return { ok: false, error: "upload-failed" };
   }
 }
+

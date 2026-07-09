@@ -104,12 +104,23 @@ Required variables:
 - `DATABASE_URL`: Postgres connection string.
 - `NEXT_PUBLIC_APP_URL`: public base URL used for sitemap, robots, canonical URLs, and social share metadata.
 - `NEXT_PUBLIC_SIGN_ZIM_ADMIN_WHATSAPP`: Sign Zim admin WhatsApp number for post-submit follow-up CTAs.
-- `SIGN_ZIM_ADMIN_KEY`
-- `BLOB_READ_WRITE_TOKEN`: private admin gate key.
-- `BLOB_READ_WRITE_TOKEN`: Vercel Blob read/write token used for provider logo and proof image uploads.
+- `SIGN_ZIM_ADMIN_KEY`: private admin gate key.
+- `BLOB_STORE_ID`: Vercel Blob store id for OIDC-authenticated server uploads in Vercel deployments.
 
-Do not expose `DATABASE_URL`, `SIGN_ZIM_ADMIN_KEY`, or `BLOB_READ_WRITE_TOKEN` in client code, screenshots, logs, or public docs.
+Optional Blob variable:
 
+- `BLOB_READ_WRITE_TOKEN`: only needed for older setups, client-upload token signing, or code running outside Vercel where OIDC is unavailable.
+
+Vercel production deployments should use OIDC by connecting the Blob store to the Vercel project. Vercel supplies `VERCEL_OIDC_TOKEN` automatically during deployments, and the Blob SDK pairs it with `BLOB_STORE_ID`.
+
+For local Blob testing, link the project and pull env values:
+
+```powershell
+vercel link
+vercel env pull
+```
+
+Do not expose `DATABASE_URL`, `SIGN_ZIM_ADMIN_KEY`, `BLOB_STORE_ID`, `VERCEL_OIDC_TOKEN`, or `BLOB_READ_WRITE_TOKEN` in client code, screenshots, logs, or public docs.
 ## Health Check
 
 The app exposes a minimal health endpoint:
@@ -128,31 +139,26 @@ Required Vercel environment variables:
 - `NEXT_PUBLIC_APP_URL`
 - `NEXT_PUBLIC_SIGN_ZIM_ADMIN_WHATSAPP`
 - `SIGN_ZIM_ADMIN_KEY`
-- `BLOB_READ_WRITE_TOKEN`
+- `BLOB_STORE_ID` from the connected Vercel Blob store
+
+Vercel supplies `VERCEL_OIDC_TOKEN` automatically for deployments when the Blob store is connected to the project. Do not add `BLOB_READ_WRITE_TOKEN` for normal production server-side uploads if OIDC is available.
 
 Deployment steps:
 
 1. Create a hosted Postgres database.
 2. Add `DATABASE_URL` to Vercel environment variables.
-3. Deploy once, then set `NEXT_PUBLIC_APP_URL` to the deployed app URL.
-4. Add `NEXT_PUBLIC_SIGN_ZIM_ADMIN_WHATSAPP`.
-5. Add a strong `SIGN_ZIM_ADMIN_KEY`.
-6. Add `BLOB_READ_WRITE_TOKEN` from Vercel Blob storage.
+3. Connect the Vercel Blob store to the project so `BLOB_STORE_ID` is available.
+4. Deploy once, then set `NEXT_PUBLIC_APP_URL` to the deployed app URL.
+5. Add `NEXT_PUBLIC_SIGN_ZIM_ADMIN_WHATSAPP`.
+6. Add a strong `SIGN_ZIM_ADMIN_KEY`.
 7. Run `prisma generate` or `npm.cmd --cache .\.npm-cache run db:generate`.
 8. Run `prisma db push` against the production database carefully.
 9. Run seed only if demo data is desired.
 10. Test logo upload and required proof uploads.
 11. Test provider signup, admin review, approval, public logo and portfolio display.
 12. Test `/terms`, `/privacy`, `/api/health`, `/admin`, `/request-quote`, `/list-your-company`, `/sitemap.xml`, and `/robots.txt`.
-<!-- old numbering below intentionally superseded -->
-6. Run `prisma db push` against the production database carefully.
-7. Run seed only if demo data is desired.
-8. Test `/api/health`.
-9. Test `/admin`.
-10. Test `/request-quote`.
-11. Test `/list-your-company`.
-12. Test `/sitemap.xml` and `/robots.txt`.
 
+Use `BLOB_READ_WRITE_TOKEN` only for older setups, client-upload token signing, or code running outside Vercel where OIDC is unavailable.
 ## Production Safety
 
 - Do not run seed on production if real provider data already exists unless seed behavior is confirmed safe for that database.
@@ -231,4 +237,5 @@ Most Sign Zim users will arrive from WhatsApp, Facebook, and mobile browsers. Be
 ## Legal Review Note
 
 The `/terms` and `/privacy` pages are practical operational drafts and should be reviewed by a qualified Zimbabwean legal practitioner before full public launch.
+
 
