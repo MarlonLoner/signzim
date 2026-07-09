@@ -18,6 +18,8 @@ import {
   verifyAdminKey
 } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
+import { appConfig } from "@/lib/config";
+import { getUploadedFiles, uploadImageFile } from "@/lib/uploads";
 import { slugify, splitUrls } from "@/lib/utils";
 
 type PackageTypeValue = (typeof packageOptions)[number]["value"];
@@ -42,9 +44,12 @@ type CompanyFormInput = {
   name: string;
   contactPerson: string;
   whatsapp: string;
-  email: string;
+  email?: string;
   city: string;
-  address?: string;
+  address: string;
+  alternativePhone?: string;
+  whatsappMarketingConsent: boolean;
+  termsAccepted: boolean;
   services: string[];
   description: string;
   website?: string;
@@ -70,6 +75,24 @@ function getOptionalText(formData: FormData, key: string) {
   return value.length ? value : undefined;
 }
 
+function normalizeZimbabwePhone(value: string) {
+  const digits = value.replace(/[^0-9]/g, "");
+
+  if (/^0[7-8][0-9]{8}$/.test(digits)) {
+    return `263${digits.slice(1)}`;
+  }
+
+  if (/^263[7-8][0-9]{8}$/.test(digits)) {
+    return digits;
+  }
+
+  return null;
+}
+
+function isChecked(formData: FormData, key: string) {
+  const value = formData.get(key);
+  return value === "on" || value === "true" || value === "1";
+}
 function getSelectedServices(formData: FormData) {
   return formData
     .getAll("services")
@@ -133,13 +156,21 @@ function parseCompanyForm(formData: FormData): CompanyFormInput | null {
     return null;
   }
 
+  const whatsapp = normalizeZimbabwePhone(getText(formData, "whatsapp"));
+  const alternativePhoneRaw = getOptionalText(formData, "alternativePhone");
+  const alternativePhone = alternativePhoneRaw ? normalizeZimbabwePhone(alternativePhoneRaw) ?? undefined : undefined;
+  const email = getOptionalText(formData, "email");
+
   const input: CompanyFormInput = {
     name: getText(formData, "name"),
     contactPerson: getText(formData, "contactPerson"),
-    whatsapp: getText(formData, "whatsapp"),
-    email: getText(formData, "email"),
+    whatsapp: whatsapp ?? "",
+    alternativePhone,
+    whatsappMarketingConsent: isChecked(formData, "whatsappMarketingConsent"),
+    termsAccepted: isChecked(formData, "termsAccepted") || Boolean(getText(formData, "companyId")),
+    email,
     city: getText(formData, "city"),
-    address: getOptionalText(formData, "address"),
+    address: getText(formData, "address"),
     services,
     description: getText(formData, "description"),
     website: getOptionalText(formData, "website"),
@@ -154,10 +185,13 @@ function parseCompanyForm(formData: FormData): CompanyFormInput | null {
   if (
     !hasMin(input.name, 2) ||
     !hasMin(input.contactPerson, 2) ||
-    !hasMin(input.whatsapp, 7) ||
-    !isValidEmail(input.email) ||
+    !whatsapp ||
+    Boolean(alternativePhoneRaw && !alternativePhone) ||
+    Boolean(email && !isValidEmail(email)) ||
     !hasMin(input.city, 2) ||
-    !hasMin(input.description, 20)
+    !hasMin(input.address, 8) ||
+    !hasMin(input.description, 20) ||
+    !input.termsAccepted
   ) {
     return null;
   }
@@ -275,8 +309,35 @@ export async function createCompanySubmission(formData: FormData) {
     redirect("/list-your-company?error=missing");
   }
 
+  const logoFiles = getUploadedFiles(formData, "logoFile");
+  const proofFiles = getUploadedFiles(formData, "proofImages").slice(0, 10);
+
+  if (proofFiles.length === 0 && !splitUrls(parsed.portfolioUrls).length) {
+    redirect("/list-your-company?error=proof");
+  }
+
   const slug = await uniqueCompanySlug(parsed.name);
   const portfolioUrls = splitUrls(parsed.portfolioUrls);
+  let logoUrl = parsed.logoUrl;
+  const uploadedProofUrls: string[] = [];
+
+  if (logoFiles[0]) {
+    const uploadedLogo = await uploadImageFile(logoFiles[0], `company-logos/${slug}`);
+    if (!uploadedLogo.ok) {
+      redirect(`/list-your-company?error=upload-${uploadedLogo.error}`);
+    }
+    logoUrl = uploadedLogo.url;
+  }
+
+  for (const file of proofFiles) {
+    const uploadedProof = await uploadImageFile(file, `portfolio/${slug}`);
+    if (!uploadedProof.ok) {
+      redirect(`/list-your-company?error=upload-${uploadedProof.error}`);
+    }
+    uploadedProofUrls.push(uploadedProof.url);
+  }
+
+  const allPortfolioUrls = [...uploadedProofUrls, ...portfolioUrls].slice(0, 10);
 
   try {
     await prisma.$transaction(async (tx) => {
@@ -286,12 +347,21 @@ export async function createCompanySubmission(formData: FormData) {
           name: parsed.name,
           slug,
           description: parsed.description,
-          logoUrl: parsed.logoUrl,
-          coverImageUrl: parsed.coverImageUrl,
+          logoUrl,
+          coverImageUrl: parsed.coverImageUrl ?? allPortfolioUrls[0],
           city: parsed.city,
           address: parsed.address,
           whatsapp: parsed.whatsapp,
           email: parsed.email,
+          alternativePhone: parsed.alternativePhone,
+          whatsappMarketingConsent: parsed.whatsappMarketingConsent,
+          whatsappMarketingConsentAt: parsed.whatsappMarketingConsent ? new Date() : null,
+          termsAcceptedAt: new Date(),
+          privacyAcceptedAt: new Date(),
+          termsVersion: appConfig.termsVersion,
+          foundingProvider: true,
+          complimentaryAccessStartedAt: new Date(`${appConfig.launchStartDate}T00:00:00.000Z`),
+          complimentaryAccessEndsAt: new Date(`${appConfig.launchEndDate}T00:00:00.000Z`),
           website: parsed.website,
           facebookUrl: parsed.facebookUrl,
           packageType: parsed.packageType,
@@ -300,7 +370,7 @@ export async function createCompanySubmission(formData: FormData) {
             ? `Claim/update request for existing listing: ${parsed.claimSlug}`
             : undefined,
           portfolio: {
-            create: portfolioUrls.map((imageUrl, index) => ({
+            create: allPortfolioUrls.map((imageUrl, index) => ({
               imageUrl,
               caption: `Portfolio image ${index + 1}`
             }))
@@ -458,6 +528,8 @@ export async function updateCompanyDetails(formData: FormData) {
         address: parsed.address,
         whatsapp: parsed.whatsapp,
         email: parsed.email,
+        alternativePhone: parsed.alternativePhone,
+        whatsappMarketingConsent: parsed.whatsappMarketingConsent,
         website: parsed.website,
         facebookUrl: parsed.facebookUrl,
         packageType: parsed.packageType,
@@ -523,3 +595,7 @@ export async function updateLeadNotes(formData: FormData) {
   revalidatePath("/admin");
   redirect("/admin?updated=notes");
 }
+
+
+
+

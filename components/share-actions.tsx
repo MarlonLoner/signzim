@@ -16,9 +16,9 @@ export function ShareActions({ url, whatsappText, label = "Share this page" }: S
         <Share2 className="h-3.5 w-3.5" aria-hidden="true" />
         {label}
       </p>
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-3 grid gap-2 sm:flex sm:flex-wrap">
         <CopyButton text={url} label="Copy Link" />
-        <a href={whatsappHref} target="_blank" rel="noreferrer" className="secondary-button">
+        <a href={whatsappHref} target="_blank" rel="noreferrer" className="secondary-button w-full sm:w-auto">
           <MessageCircle className="h-4 w-4" aria-hidden="true" />
           Share on WhatsApp
         </a>

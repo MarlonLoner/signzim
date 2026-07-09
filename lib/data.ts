@@ -3,6 +3,7 @@ export const serviceGroups = [
   "Branding & Print",
   "Interior Deco",
   "Shop & Office Fitting",
+  "Aluminium Works",
   "Events & Displays"
 ] as const;
 
@@ -248,8 +249,140 @@ export const serviceCatalog = [
     description: "Decorative ceiling features, light coves, statement lighting, and branded interior focal points.",
     seoDescription:
       "Find ceiling and lighting feature providers in Zimbabwe for decorative ceilings, light coves, statement lighting, and branded interior focal points."
-  }
-] as const satisfies ReadonlyArray<{
+  },
+  {
+    name: "Kitchen Fitting",
+    slug: "kitchen-fitting",
+    group: "Shop & Office Fitting",
+    description: "Kitchen installations, cabinetry fitting, counters, finishes, and practical food-service layouts.",
+    seoDescription: "Find kitchen fitting providers in Zimbabwe for commercial kitchens, cabinetry, counters, finishes, and fitted kitchen installations."
+  },
+  {
+    name: "Custom Kitchens",
+    slug: "custom-kitchens",
+    group: "Shop & Office Fitting",
+    description: "Custom kitchen design, manufacturing, fitting, cabinetry, storage, and worktop installations.",
+    seoDescription: "Compare custom kitchen providers in Zimbabwe for cabinets, worktops, storage, fitting, and commercial or residential-style kitchen projects."
+  },
+  {
+    name: "Kitchen Cabinets",
+    slug: "kitchen-cabinets",
+    group: "Shop & Office Fitting",
+    description: "Kitchen cabinet manufacturing, installation, doors, drawers, shelving, and fitted storage.",
+    seoDescription: "Find kitchen cabinet makers and fitters in Zimbabwe for cabinet installation, drawers, shelving, doors, and fitted storage."
+  },
+  {
+    name: "Built-in Cupboards",
+    slug: "built-in-cupboards",
+    group: "Shop & Office Fitting",
+    description: "Built-in cupboards, storage walls, wardrobe-style fittings, and practical interior storage.",
+    seoDescription: "Find built-in cupboard providers in Zimbabwe for fitted storage, wardrobe-style units, shelving, and interior cabinetry."
+  },
+  {
+    name: "Office Fit-outs",
+    slug: "office-fit-outs",
+    group: "Shop & Office Fitting",
+    description: "Complete office fit-outs, reception areas, workspace planning, partitions, furniture and branded finishes.",
+    seoDescription: "Compare office fit-out providers in Zimbabwe for workspaces, reception areas, partitions, furniture, and branded office interiors."
+  },
+  {
+    name: "Drywall Partitions",
+    slug: "drywall-partitions",
+    group: "Shop & Office Fitting",
+    description: "Drywall partitioning, room divisions, office zoning, privacy walls, and commercial interior separation.",
+    seoDescription: "Find drywall partition providers in Zimbabwe for office divisions, room partitions, privacy walls, and commercial interior layouts."
+  },
+  {
+    name: "Aluminium Partitions",
+    slug: "aluminium-partitions",
+    group: "Aluminium Works",
+    description: "Aluminium-framed partitions, glass divisions, office separation, and shop interior partition systems.",
+    seoDescription: "Find aluminium partition providers in Zimbabwe for framed glass partitions, office divisions, and shop interior separation."
+  },
+  {
+    name: "Aluminium Works",
+    slug: "aluminium-works",
+    group: "Aluminium Works",
+    description: "Aluminium fabrication, windows, doors, shopfronts, frames, partitions, and glass installations.",
+    seoDescription: "Find aluminium works providers in Zimbabwe for windows, doors, shopfronts, frames, partitions, and glass installations."
+  },
+  {
+    name: "Aluminium Windows",
+    slug: "aluminium-windows",
+    group: "Aluminium Works",
+    description: "Aluminium window supply, fabrication, replacement, and installation for shops, offices, and properties.",
+    seoDescription: "Compare aluminium window providers in Zimbabwe for fabrication, replacement, supply, and installation."
+  },
+  {
+    name: "Aluminium Doors",
+    slug: "aluminium-doors",
+    group: "Aluminium Works",
+    description: "Aluminium doors, sliding doors, entry systems, glass doors, and commercial doorway installations.",
+    seoDescription: "Find aluminium door providers in Zimbabwe for sliding doors, glass doors, commercial entry systems, and installations."
+  },
+  {
+    name: "Aluminium Shopfronts",
+    slug: "aluminium-shopfronts",
+    group: "Aluminium Works",
+    description: "Aluminium shopfront systems, glass facades, display windows, and retail frontage installations.",
+    seoDescription: "Find aluminium shopfront providers in Zimbabwe for retail facades, glass frontage, display windows, and commercial entrances."
+  },
+  {
+    name: "Aluminium Frames",
+    slug: "aluminium-frames",
+    group: "Aluminium Works",
+    description: "Aluminium frames for windows, doors, partitions, shopfronts, and glass installations.",
+    seoDescription: "Compare aluminium frame providers in Zimbabwe for doors, windows, partitions, shopfronts, and glass installations."
+  },
+  {
+    name: "Glass & Aluminium Installations",
+    slug: "glass-aluminium-installations",
+    group: "Aluminium Works",
+    description: "Glass and aluminium installation teams for shopfronts, offices, partitions, doors, and windows.",
+    seoDescription: "Find glass and aluminium installers in Zimbabwe for shopfronts, partitions, windows, doors, and office fit-outs."
+  },
+  {
+    name: "Exhibition Booths",
+    slug: "exhibition-booths",
+    group: "Events & Displays",
+    description: "Exhibition booth design, branded stands, launch spaces, expo counters, and trade show environments.",
+    seoDescription: "Find exhibition booth providers in Zimbabwe for branded booths, expo counters, trade show displays, and launch environments."
+  },
+  {
+    name: "Trade Show Displays",
+    slug: "trade-show-displays",
+    group: "Events & Displays",
+    description: "Trade show displays, promotional counters, backdrops, modular displays, and branded expo presentation.",
+    seoDescription: "Compare trade show display providers in Zimbabwe for expo booths, backdrops, counters, modular displays, and branded stands."
+  },
+  {
+    name: "Wall Finishes",
+    slug: "wall-finishes",
+    group: "Interior Deco",
+    description: "Decorative wall finishes, textured surfaces, branded walls, paint effects, and commercial feature walls.",
+    seoDescription: "Find wall finish providers in Zimbabwe for textured walls, branded surfaces, decorative finishes, and commercial interiors."
+  },
+  {
+    name: "Wallpaper Installation",
+    slug: "wallpaper-installation",
+    group: "Interior Deco",
+    description: "Wallpaper supply and installation, feature walls, decorative finishes, and commercial wall treatments.",
+    seoDescription: "Find wallpaper installation providers in Zimbabwe for feature walls, commercial interiors, wall treatments, and decorative finishes."
+  },
+  {
+    name: "Reception Design",
+    slug: "reception-design",
+    group: "Interior Deco",
+    description: "Reception design, front desk planning, welcome areas, branded walls, seating zones, and first-impression spaces.",
+    seoDescription: "Compare reception design providers in Zimbabwe for welcome areas, front desks, branded walls, and commercial reception spaces."
+  },
+  {
+    name: "Commercial Interior Styling",
+    slug: "commercial-interior-styling",
+    group: "Interior Deco",
+    description: "Commercial styling, decor direction, customer-facing interiors, finishes, displays, lighting and brand-led spaces.",
+    seoDescription: "Find commercial interior styling providers in Zimbabwe for customer-facing spaces, brand-led decor, displays, lighting, and finishes."
+  },] as const satisfies ReadonlyArray<{
   name: string;
   slug: string;
   group: ServiceGroup;
@@ -315,3 +448,7 @@ export const companyStatuses = ["PENDING", "APPROVED", "REJECTED", "ARCHIVED"] a
 export const paymentStatuses = ["NOT_REQUIRED", "PENDING_PAYMENT", "PAID", "EXPIRED"] as const;
 
 export const leadStatuses = ["NEW", "CONTACTED", "SENT_TO_COMPANIES", "CLOSED", "LOST"] as const;
+
+
+
+

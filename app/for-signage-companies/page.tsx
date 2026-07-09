@@ -62,7 +62,7 @@ export default function ForSignageCompaniesPage() {
         <div className="page-shell grid gap-10 py-12 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">For providers</p>
-            <h1 className="mt-4 max-w-4xl text-5xl font-black leading-tight text-white">
+            <h1 className="mt-4 max-w-4xl text-4xl font-black leading-tight text-white sm:text-5xl">
               Get discovered by customers looking for signage, interiors and fitting in Zimbabwe.
             </h1>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-zinc-300">

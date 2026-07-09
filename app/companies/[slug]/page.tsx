@@ -14,11 +14,12 @@ import {
   TriangleAlert
 } from "lucide-react";
 import { Badge } from "@/components/badge";
+import { CompanyLogo } from "@/components/company-logo";
 import { ShareActions } from "@/components/share-actions";
 import { TrustBadgeExplainer } from "@/components/trust-badge-explainer";
 import { absoluteUrl } from "@/lib/config";
 import { prisma } from "@/lib/prisma";
-import { compactList, initials } from "@/lib/utils";
+import { compactList } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -152,15 +153,9 @@ export default async function CompanyProfilePage({ params }: { params: Params })
             Directory
           </Link>
           <div className="max-w-4xl">
-            <div className="mb-6 flex h-20 w-20 items-center justify-center overflow-hidden rounded-lg border border-white/15 bg-black text-2xl font-black text-amberglow">
-              {company.logoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={company.logoUrl} alt="" className="h-full w-full object-cover" />
-              ) : (
-                initials(company.name)
-              )}
-            </div>
+            <CompanyLogo name={company.name} logoUrl={company.logoUrl} size="lg" className="mb-6 rounded-lg border-white/15" />
             <div className="flex flex-wrap gap-2">
+              {company.foundingProvider ? <Badge tone="blue">Founding Provider</Badge> : null}
               {company.isVerified ? (
                 <Badge tone="green">
                   <ShieldCheck className="mr-1 h-3 w-3" aria-hidden="true" />
@@ -179,20 +174,20 @@ export default async function CompanyProfilePage({ params }: { params: Params })
                 Featured providers get higher visibility on Sign Zim.
               </p>
             ) : null}
-            <h1 className="mt-5 text-5xl font-black leading-tight text-white md:text-7xl">{company.name}</h1>
+            <h1 className="mt-5 break-words text-4xl font-black leading-tight text-white sm:text-5xl md:text-7xl">{company.name}</h1>
             <p className="mt-4 flex items-center gap-2 text-lg text-zinc-200">
               <MapPin className="h-5 w-5 text-amberglow" aria-hidden="true" />
               {company.address ? `${company.address}, ${company.city}` : company.city}
             </p>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-200">{company.description}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href={whatsapp} target="_blank" rel="noreferrer" className="primary-button">
+            <div className="mt-8 grid gap-3 sm:flex sm:flex-wrap">
+              <a href={whatsapp} target="_blank" rel="noreferrer" className="primary-button w-full sm:w-auto">
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 WhatsApp
               </a>
               <Link
                 href={`/request-quote?company=${company.slug}&service=${encodeURIComponent(services[0]?.slug ?? "")}`}
-                className="secondary-button"
+                className="secondary-button w-full sm:w-auto"
               >
                 Request a Quote for This Service
               </Link>
@@ -219,7 +214,8 @@ export default async function CompanyProfilePage({ params }: { params: Params })
           </div>
 
           <div>
-            <h2 className="text-2xl font-black text-white">Portfolio gallery</h2>
+            <h2 className="text-2xl font-black text-white">Completed Work & Service Proof</h2>
+            <p className="mt-2 text-sm leading-6 text-zinc-400">Review completed-work images, discuss specifications directly with the provider and request additional references where necessary.</p>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {(company.portfolio.length ? company.portfolio : [{ id: "hero", imageUrl: coverImage, caption: company.name }]).map(
                 (image) => (
@@ -240,16 +236,16 @@ export default async function CompanyProfilePage({ params }: { params: Params })
           <div className="panel rounded-lg p-6">
             <h2 className="text-xl font-black text-white">Contact details</h2>
             <div className="mt-5 space-y-3 text-sm text-zinc-300">
-              <a href={whatsapp} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-md bg-amberglow px-4 py-3 font-semibold text-black">
+              <a href={whatsapp} target="_blank" rel="noreferrer" className="flex items-center gap-3 break-all rounded-md bg-amberglow px-4 py-3 font-semibold text-black">
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
-                {company.whatsapp}
+                Business WhatsApp: {company.whatsapp}
               </a>
-              <a href={`mailto:${company.email}`} className="flex items-center gap-3 rounded-md border border-white/10 bg-black/30 px-4 py-3">
+              <a href={`mailto:${company.email}`} className="flex items-center gap-3 break-all rounded-md border border-white/10 bg-black/30 px-4 py-3">
                 <Mail className="h-4 w-4 text-amberglow" aria-hidden="true" />
                 {company.email}
               </a>
               {contactLinks.map((link) => (
-                <a key={link} href={link} target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-md border border-white/10 bg-black/30 px-4 py-3">
+                <a key={link} href={link} target="_blank" rel="noreferrer" className="flex items-center gap-3 break-all rounded-md border border-white/10 bg-black/30 px-4 py-3">
                   {link.includes("facebook") ? (
                     <Facebook className="h-4 w-4 text-amberglow" aria-hidden="true" />
                   ) : (
@@ -257,7 +253,8 @@ export default async function CompanyProfilePage({ params }: { params: Params })
                   )}
                   {link.replace(/^https?:\/\//, "")}
                 </a>
-              ))}
+              ))}            <p className="mt-4 text-xs leading-5 text-zinc-500">SignZim connects buyers with independent suppliers. Although we review provider information before approval, customers should independently confirm credentials, quotations, workmanship, timelines and payment terms before entering into an agreement.</p>
+
             </div>
           </div>
 
@@ -298,3 +295,5 @@ export default async function CompanyProfilePage({ params }: { params: Params })
     </div>
   );
 }
+
+

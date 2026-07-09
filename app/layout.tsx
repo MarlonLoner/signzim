@@ -5,21 +5,21 @@ import { SiteFooter } from "@/components/site-footer";
 import { appConfig } from "@/lib/config";
 
 const siteDescription =
-  "Find signage, interior deco, branding and fitting providers in Zimbabwe. Compare portfolios and request quotes for shopfront signs, branded spaces, displays, counters and more.";
+  "Find trusted providers, view real work and request quotes for signage, kitchens, partitions, aluminium works, exhibition booths, commercial interiors and fittings.";
 const ogImage = "/images/sign-zim-hero.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL(appConfig.appUrl),
   title: {
-    default: "Sign Zim | Signage, Interior Deco & Fitting Providers in Zimbabwe",
-    template: "%s | Sign Zim"
+    default: "SignZim, Interior Deco & Fittings | Zimbabwe Marketplace",
+    template: "%s | SignZim"
   },
   description: siteDescription,
   alternates: {
     canonical: "/"
   },
   openGraph: {
-    title: "Sign Zim | Signage, Interior Deco & Fitting Providers in Zimbabwe",
+    title: "SignZim, Interior Deco & Fittings | Zimbabwe Marketplace",
     description: siteDescription,
     url: appConfig.appUrl,
     siteName: appConfig.appName,
@@ -28,14 +28,14 @@ export const metadata: Metadata = {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Sign Zim, Zimbabwe's marketplace for signage, deco and fitting providers"
+        alt: "SignZim, Interior Deco & Fittings, Zimbabwe's marketplace for signage, deco and fitting providers"
       }
     ],
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sign Zim | Signage, Interior Deco & Fitting Providers in Zimbabwe",
+    title: "SignZim, Interior Deco & Fittings | Zimbabwe Marketplace",
     description: siteDescription,
     images: [ogImage]
   }
@@ -56,3 +56,4 @@ export default function RootLayout({
     </html>
   );
 }
+

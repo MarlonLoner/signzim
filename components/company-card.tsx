@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowUpRight, MapPin, MessageCircle, ShieldCheck, Star } from "lucide-react";
 import { Badge } from "@/components/badge";
+import { CompanyLogo } from "@/components/company-logo";
 import type { CompanyWithServices } from "@/lib/types";
-import { cn, initials } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 type CompanyCardProps = {
   company: CompanyWithServices;
@@ -26,24 +27,20 @@ export function CompanyCard({ company }: CompanyCardProps) {
           backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.7)), url("${coverImage}")`
         }}
       />
-      <div className="space-y-5 p-5">
+      <div className="space-y-5 p-4 sm:p-5">
         <div className="flex items-start gap-4">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-md border border-white/10 bg-black text-lg font-black text-amberglow">
-            {company.logoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={company.logoUrl} alt="" className="h-full w-full object-cover" />
-            ) : (
-              initials(company.name)
-            )}
-          </div>
+          <CompanyLogo name={company.name} logoUrl={company.logoUrl} />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="truncate text-lg font-black text-white">{company.name}</h3>
+              <h3 className="min-w-0 break-words text-lg font-black text-white">{company.name}</h3>
               {company.isVerified ? (
                 <Badge tone="green">
                   <ShieldCheck className="mr-1 h-3 w-3" aria-hidden="true" />
                   Verified
                 </Badge>
+              ) : null}
+              {company.foundingProvider ? (
+                <Badge tone="blue">Founding</Badge>
               ) : null}
               {company.isFeatured ? (
                 <Badge tone="amber">
@@ -74,12 +71,12 @@ export function CompanyCard({ company }: CompanyCardProps) {
           ) : null}
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <a href={whatsapp} target="_blank" rel="noreferrer" className="primary-button px-3">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <a href={whatsapp} target="_blank" rel="noreferrer" className="primary-button w-full px-3">
             <MessageCircle className="h-4 w-4" aria-hidden="true" />
             WhatsApp
           </a>
-          <Link href={`/companies/${company.slug}`} className="secondary-button px-3">
+          <Link href={`/companies/${company.slug}`} className="secondary-button w-full px-3">
             View Profile
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </Link>
@@ -88,3 +85,4 @@ export function CompanyCard({ company }: CompanyCardProps) {
     </article>
   );
 }
+

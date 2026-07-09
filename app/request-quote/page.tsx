@@ -8,7 +8,7 @@ import { prisma } from "@/lib/prisma";
 import { leadWhatsAppMessage, whatsappLink } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Request a Signage, Deco or Fitting Quote | Sign Zim",
+  title: "Request a Quote | SignZim, Interior Deco & Fittings",
   description:
     "Request quotes in Zimbabwe for signage, interior deco, shop fitting, office fitting, wall branding, retail displays, counters, shelving, and more."
 };
@@ -90,7 +90,7 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
     <div className="page-shell grid gap-10 py-12 lg:grid-cols-[0.9fr_1.1fr]">
       <aside className="lg:sticky lg:top-24 lg:h-fit">
         <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Customer lead</p>
-        <h1 className="mt-4 text-5xl font-black leading-tight text-white">Request a Quote</h1>
+        <h1 className="mt-4 text-4xl font-black leading-tight text-white sm:text-5xl">Request a Quote</h1>
         <p className="mt-5 text-lg leading-8 text-zinc-300">
           Send one request with your project details, location, budget, and timeline so Sign Zim can help you reach
           relevant signage, branding, interior deco, and fitting providers faster.
@@ -289,6 +289,8 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
             </label>
           </div>
 
+          <p className="text-xs leading-5 text-zinc-500">By submitting, you agree that SignZim may use your details to process this request and connect you with relevant independent providers. Read the <Link href="/terms" className="text-honey underline">Terms</Link> and <Link href="/privacy" className="text-honey underline">Privacy Policy</Link>.</p>
+          <p className="text-xs leading-5 text-zinc-500">SignZim connects buyers with independent suppliers. Although we review provider information before approval, customers should independently confirm credentials, quotations, workmanship, timelines and payment terms before entering into an agreement.</p>
           <button type="submit" className="primary-button mt-2 w-full sm:w-fit">
             <MessageCircle className="h-4 w-4" aria-hidden="true" />
             Submit Quote Request
@@ -298,3 +300,4 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
     </div>
   );
 }
+

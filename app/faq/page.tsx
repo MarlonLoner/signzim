@@ -14,7 +14,7 @@ export default function FaqPage() {
     <div className="page-shell py-12">
       <div className="max-w-4xl">
         <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">FAQ</p>
-        <h1 className="mt-4 text-5xl font-black leading-tight text-white">Questions before you request or list.</h1>
+        <h1 className="mt-4 text-4xl font-black leading-tight text-white sm:text-5xl">Questions before you request or list.</h1>
         <p className="mt-5 text-lg leading-8 text-zinc-300">
           Clear answers for customers looking for signage, branding, interiors and fitting in Zimbabwe, plus providers
           preparing to join the marketplace.

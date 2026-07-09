@@ -151,6 +151,9 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
                   <MessageCircle className="h-4 w-4" aria-hidden="true" />
                   {service ? `Request a ${service.name} Quote` : "Request a Quote"}
                 </Link>
+                <Link href={`/companies${service ? `?service=${service.slug}` : ""}`} className="secondary-button">
+                  Browse Providers
+                </Link>
                 <Link href="/list-your-company" className="secondary-button">
                   <Building2 className="h-4 w-4" aria-hidden="true" />
                   List Your Company
@@ -191,6 +194,9 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Link href={quoteHref} className="primary-button">
                 {service ? `Request a ${service.name} Quote` : "Request a Quote"}
+              </Link>
+              <Link href={`/companies${service ? `?service=${service.slug}` : ""}`} className="secondary-button">
+                Browse Providers
               </Link>
               <Link href="/list-your-company" className="secondary-button">
                 List Your Company

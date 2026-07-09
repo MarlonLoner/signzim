@@ -7,7 +7,7 @@ export const customerFaqs: FaqItem[] = [
   {
     question: "What is Sign Zim?",
     answer:
-      "Sign Zim is a Zimbabwean marketplace that helps businesses find signage, branding, interior deco and fitting providers, compare portfolios, and request quotes in one place."
+      "SignZim, Interior Deco & Fittings is Zimbabwe's marketplace for signage, interior deco and fittings. It helps businesses find trusted providers, view real work and request quotes."
   },
   {
     question: "Can I request a quote from multiple providers?",
@@ -25,6 +25,20 @@ export const customerFaqs: FaqItem[] = [
       "Review the company profile, services, city, portfolio images, verification status, and response quality before agreeing to pricing, measurements, production, fitting, or timelines."
   },
   {
+    question: "Does SignZim guarantee providers?",
+    answer:
+      "No. SignZim reviews provider information before approval, but customers should independently confirm credentials, quotations, workmanship, timelines, warranties and payment terms before agreeing to work."
+  },
+  {
+    question: "What due diligence should customers conduct?",
+    answer:
+      "Check the provider profile, proof images, references, business address, WhatsApp response, written quotation, scope, measurements, timelines, warranties and payment terms before paying or approving work."
+  },
+  {
+    question: "How can I report a problematic provider or listing?",
+    answer:
+      "Contact SignZim through the published admin or WhatsApp channel with the provider name, link, concern and any supporting details."
+  },  {
     question: "Is it free to request a quote?",
     answer:
       "Yes. Customers can submit a signage, branding, deco, display or fitting quote request for free while Sign Zim builds the marketplace."
@@ -32,6 +46,51 @@ export const customerFaqs: FaqItem[] = [
 ];
 
 export const providerFaqs: FaqItem[] = [
+  {
+    question: "Is SignZim free for providers?",
+    answer:
+      "Approved founding providers receive complimentary launch access from 10 July 2026 to 10 October 2026. SignZim uses premium marketplace access at no cost during launch rather than promising permanent free listings."
+  },
+  {
+    question: "What happens after the first three months?",
+    answer:
+      "Future subscription options will be communicated before paid plans begin. Providers must affirmatively select a subscription later; there is no automatic charge after the launch period."
+  },
+  {
+    question: "What is a Founding Provider?",
+    answer:
+      "A Founding Provider is part of the first 1,000-provider launch target and receives complimentary marketplace access during the launch period after approval."
+  },
+  {
+    question: "Why do I need to upload completed-work images?",
+    answer:
+      "Proof images help customers see real work and help SignZim check that claimed services reasonably match submitted evidence."
+  },
+  {
+    question: "Is a business logo required?",
+    answer:
+      "No. A logo is optional. If you do not upload one, SignZim shows a clean initials or provider placeholder."
+  },
+  {
+    question: "Why is my business address required?",
+    answer:
+      "Customers use the address to understand where your business operates. Exact job arrangements still remain between you and the customer."
+  },
+  {
+    question: "Why does SignZim request my WhatsApp number?",
+    answer:
+      "Business WhatsApp is the primary contact channel customers use to reach providers. SignZim stores it in normalized Zimbabwe format where possible."
+  },
+  {
+    question: "Will SignZim send me WhatsApp announcements?",
+    answer:
+      "Promotional provider announcements require optional opt-in consent. Important operational messages may still be sent to administer listings or quote requests."
+  },
+  {
+    question: "How do I update or remove my information?",
+    answer:
+      "Use the claim/update link or contact SignZim through the official admin channel to request corrections, updates or removal."
+  },
   {
     question: "How do I list my company?",
     answer:
@@ -81,3 +140,4 @@ export function FaqSection({ title, eyebrow = "FAQ", items }: FaqSectionProps) {
     </section>
   );
 }
+

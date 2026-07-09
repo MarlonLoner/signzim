@@ -104,9 +104,11 @@ Required variables:
 - `DATABASE_URL`: Postgres connection string.
 - `NEXT_PUBLIC_APP_URL`: public base URL used for sitemap, robots, canonical URLs, and social share metadata.
 - `NEXT_PUBLIC_SIGN_ZIM_ADMIN_WHATSAPP`: Sign Zim admin WhatsApp number for post-submit follow-up CTAs.
-- `SIGN_ZIM_ADMIN_KEY`: private admin gate key.
+- `SIGN_ZIM_ADMIN_KEY`
+- `BLOB_READ_WRITE_TOKEN`: private admin gate key.
+- `BLOB_READ_WRITE_TOKEN`: Vercel Blob read/write token used for provider logo and proof image uploads.
 
-Do not expose `DATABASE_URL` or `SIGN_ZIM_ADMIN_KEY` in client code, screenshots, logs, or public docs.
+Do not expose `DATABASE_URL`, `SIGN_ZIM_ADMIN_KEY`, or `BLOB_READ_WRITE_TOKEN` in client code, screenshots, logs, or public docs.
 
 ## Health Check
 
@@ -126,6 +128,7 @@ Required Vercel environment variables:
 - `NEXT_PUBLIC_APP_URL`
 - `NEXT_PUBLIC_SIGN_ZIM_ADMIN_WHATSAPP`
 - `SIGN_ZIM_ADMIN_KEY`
+- `BLOB_READ_WRITE_TOKEN`
 
 Deployment steps:
 
@@ -134,6 +137,14 @@ Deployment steps:
 3. Deploy once, then set `NEXT_PUBLIC_APP_URL` to the deployed app URL.
 4. Add `NEXT_PUBLIC_SIGN_ZIM_ADMIN_WHATSAPP`.
 5. Add a strong `SIGN_ZIM_ADMIN_KEY`.
+6. Add `BLOB_READ_WRITE_TOKEN` from Vercel Blob storage.
+7. Run `prisma generate` or `npm.cmd --cache .\.npm-cache run db:generate`.
+8. Run `prisma db push` against the production database carefully.
+9. Run seed only if demo data is desired.
+10. Test logo upload and required proof uploads.
+11. Test provider signup, admin review, approval, public logo and portfolio display.
+12. Test `/terms`, `/privacy`, `/api/health`, `/admin`, `/request-quote`, `/list-your-company`, `/sitemap.xml`, and `/robots.txt`.
+<!-- old numbering below intentionally superseded -->
 6. Run `prisma db push` against the production database carefully.
 7. Run seed only if demo data is desired.
 8. Test `/api/health`.
@@ -163,6 +174,27 @@ The seed script is designed for demo data refreshes without deleting real record
 
 Seeding may still update records that use the same demo slugs, phone numbers, or service combinations. Check seed behavior before using it on production data.
 
+## First 30 Providers Launch Plan
+
+Use this simple manual tracker for the first provider acquisition sprint. The target mix is:
+
+- 10 signage companies
+- 5 interior deco providers
+- 5 shop fitting providers
+- 5 print/branding providers
+- 5 display/events providers
+
+| Company name | Category | City | Contact | Status | Package interest | Notes | Follow-up date |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+|  | Signage |  |  | Not contacted | Free / Verified / Featured |  |  |
+|  | Signage |  |  | Not contacted | Free / Verified / Featured |  |  |
+|  | Signage |  |  | Not contacted | Free / Verified / Featured |  |  |
+|  | Interior deco |  |  | Not contacted | Free / Verified / Featured |  |  |
+|  | Shop fitting |  |  | Not contacted | Free / Verified / Featured |  |  |
+|  | Print/branding |  |  | Not contacted | Free / Verified / Featured |  |  |
+|  | Display/events |  |  | Not contacted | Free / Verified / Featured |  |  |
+
+Suggested statuses: `Not contacted`, `Invited`, `Interested`, `Submitted`, `Approved`, `Featured pitch`, `Follow up`, `Not a fit`.
 ## Launch Checks
 
 Before demo or deployment, confirm:
@@ -176,3 +208,27 @@ Before demo or deployment, confirm:
 - At least 1 featured company exists.
 - At least 1 quote request has been captured.
 - `/sitemap.xml`, `/robots.txt`, and `/api/health` respond as expected.
+
+## Mobile Smoke Test
+
+Most Sign Zim users will arrive from WhatsApp, Facebook, and mobile browsers. Before launch or after layout changes, check:
+
+- Homepage at mobile width.
+- Companies directory filters and cards.
+- A company profile page.
+- Services page and grouped service categories.
+- Request quote form.
+- List your company form.
+- For Providers page.
+- Admin page.
+- No horizontal scrolling.
+- Primary CTAs are visible and tappable.
+- Forms are usable without zooming.
+- WhatsApp, copy link, and share buttons fit inside the viewport.
+- Portfolio galleries and service chips wrap cleanly.
+
+
+## Legal Review Note
+
+The `/terms` and `/privacy` pages are practical operational drafts and should be reviewed by a qualified Zimbabwean legal practitioner before full public launch.
+

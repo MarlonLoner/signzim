@@ -21,7 +21,7 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Sign Zim | Signage, Interior Deco & Fitting Providers in Zimbabwe",
+  title: "SignZim, Interior Deco & Fittings | Zimbabwe Marketplace",
   description:
     "Find signage companies, interior deco providers, shop fitters, office fitters and branding suppliers in Zimbabwe. Compare portfolios and request quotes."
 };
@@ -61,13 +61,13 @@ export default async function HomePage() {
           <div className="max-w-3xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amberglow/40 bg-amberglow/10 px-4 py-2 text-sm font-semibold text-honey">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
-              Your next sign starts here.
+              Zimbabwe&apos;s marketplace for signage, interior deco and fittings.
             </div>
-            <h1 className="max-w-4xl text-5xl font-black leading-[1.02] text-white sm:text-6xl lg:text-7xl">
-              Find signage, interior deco, and fitting providers in Zimbabwe.
+            <h1 className="max-w-4xl text-4xl font-black leading-[1.05] text-white sm:text-6xl lg:text-7xl">
+              Find trusted providers for signage, kitchens, partitions, aluminium works and fittings in Zimbabwe.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-200">
-              Compare providers, view portfolios, and request quotes for shopfront signs, vehicle branding, lightboxes,
+              Find trusted providers, view real work and request quotes for shopfront signs, vehicle branding, lightboxes,
               interior deco, shop fitting, office fitting, reception branding, wall branding, displays, counters and more.
             </p>
 
@@ -116,13 +116,13 @@ export default async function HomePage() {
             </form>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/companies" className="primary-button">
-                <Search className="h-4 w-4" aria-hidden="true" />
-                Browse Companies
-              </Link>
               <Link href="/request-quote" className="primary-button">
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 Request a Quote
+              </Link>
+              <Link href="/companies" className="secondary-button">
+                <Search className="h-4 w-4" aria-hidden="true" />
+                Browse Companies
               </Link>
               <Link href="/list-your-company" className="secondary-button">
                 <Building2 className="h-4 w-4" aria-hidden="true" />
@@ -150,7 +150,8 @@ export default async function HomePage() {
         <div className="page-shell flex flex-col gap-4 py-5 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Launch update</p>
-            <h2 className="mt-1 text-2xl font-black text-white">Now onboarding signage, deco and fitting providers across Zimbabwe.</h2>
+            <h2 className="mt-1 text-2xl font-black text-white">Founding Provider Launch: Join the first 1,000 providers.</h2>
+            <p className="mt-2 text-sm leading-6 text-zinc-300">Approved signage, interior deco and fitting businesses receive complimentary premium marketplace access until 10 October 2026.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link href="/list-your-company#submit-listing" className="primary-button">
@@ -372,3 +373,5 @@ export default async function HomePage() {
     </div>
   );
 }
+
+

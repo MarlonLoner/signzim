@@ -29,6 +29,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: absoluteUrl("/"), changeFrequency: "weekly", priority: 1 },
     { url: absoluteUrl("/about"), changeFrequency: "monthly", priority: 0.7 },
     { url: absoluteUrl("/faq"), changeFrequency: "monthly", priority: 0.65 },
+    { url: absoluteUrl("/launch"), changeFrequency: "weekly", priority: 0.9 },
+    { url: absoluteUrl("/terms"), changeFrequency: "monthly", priority: 0.45 },
+    { url: absoluteUrl("/privacy"), changeFrequency: "monthly", priority: 0.45 },
     { url: absoluteUrl("/companies"), changeFrequency: "weekly", priority: 0.9 },
     { url: absoluteUrl("/services"), changeFrequency: "weekly", priority: 0.85 },
     { url: absoluteUrl("/request-quote"), changeFrequency: "monthly", priority: 0.85 },
@@ -50,3 +53,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [...publicRoutes, ...serviceRoutes, ...cityRoutes, ...(await getCompanyRoutes())];
 }
+
+

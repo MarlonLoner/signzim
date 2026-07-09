@@ -2,10 +2,13 @@ import Link from "next/link";
 import { Building2 } from "lucide-react";
 
 const quickLinks = [
+  { href: "/launch", label: "Launch" },
   { href: "/companies", label: "Companies" },
   { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
-  { href: "/faq", label: "FAQ" }
+  { href: "/faq", label: "FAQ" },
+  { href: "/terms", label: "Terms" },
+  { href: "/privacy", label: "Privacy" }
 ];
 
 const customerLinks = [
@@ -38,12 +41,12 @@ export function SiteFooter() {
             </span>
           </Link>
           <p className="mt-5 max-w-md text-sm leading-6 text-zinc-400">
-            Sign Zim helps Zimbabwean businesses discover signage, branding, interior deco and fitting providers,
+            SignZim, Interior Deco & Fittings helps Zimbabwean businesses discover signage, branding, interior deco and fitting providers,
             compare portfolios, and request quotes for shopfront signs, vehicle branding, displays, counters, shelves,
             partitions, branded interiors and more.
           </p>
           <p className="mt-5 max-w-md text-xs leading-5 text-zinc-500">
-            Sign Zim is a marketplace directory, not the installer or contracting party. Customers should confirm
+            SignZim connects buyers with independent suppliers. Although we review provider information before approval, customers should independently confirm
             pricing, measurements, artwork, production timelines, warranties, and payment terms directly with each
             provider before work begins.
           </p>
@@ -73,3 +76,5 @@ export function SiteFooter() {
     </footer>
   );
 }
+
+

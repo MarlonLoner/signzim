@@ -326,12 +326,12 @@ function CompanyEditor({ company }: { company: CompanyWithServices }) {
             <input name="contactPerson" required className="input" defaultValue={company.contactPerson} />
           </label>
           <label className="field">
-            <span className="label">WhatsApp</span>
+            <span className="label">Business WhatsApp Number</span>
             <input name="whatsapp" required className="input" defaultValue={company.whatsapp} />
           </label>
           <label className="field">
-            <span className="label">Email</span>
-            <input name="email" type="email" required className="input" defaultValue={company.email} />
+            <span className="label">Email optional</span>
+            <input name="email" type="email" className="input" defaultValue={company.email ?? ""} />
           </label>
           <label className="field">
             <span className="label">City</span>
@@ -354,8 +354,8 @@ function CompanyEditor({ company }: { company: CompanyWithServices }) {
             </select>
           </label>
           <label className="field md:col-span-2">
-            <span className="label">Address optional</span>
-            <input name="address" className="input" defaultValue={company.address ?? ""} />
+            <span className="label">Physical business address</span>
+            <input name="address" required className="input" defaultValue={company.address} />
           </label>
           <label className="field">
             <span className="label">Website optional</span>
@@ -382,7 +382,7 @@ function CompanyEditor({ company }: { company: CompanyWithServices }) {
 
         <fieldset className="field">
           <legend className="label">Services</legend>
-          <div className="grid gap-2 md:grid-cols-2">
+          <div className="grid max-h-[34rem] gap-2 overflow-y-auto pr-1 md:grid-cols-2">
             {groupedServiceCatalog.map(({ group, services }) => (
               <div key={group} className="grid gap-2 md:col-span-2">
                 <h4 className="text-sm font-black text-honey">{group}</h4>
@@ -432,7 +432,11 @@ function AdminCompanyCard({ company }: { company: CompanyWithServices }) {
           <p className="mt-3 max-w-3xl text-sm leading-6 text-zinc-300">{company.description}</p>
           <div className="mt-4 flex flex-wrap gap-2 text-xs text-zinc-300">
             <span className="rounded-full bg-white/5 px-3 py-1">Contact: {company.contactPerson}</span>
-            <span className="rounded-full bg-white/5 px-3 py-1">WhatsApp: {company.whatsapp}</span>
+            <span className="rounded-full bg-white/5 px-3 py-1">Business WhatsApp: {company.whatsapp}</span>
+            {company.alternativePhone ? <span className="rounded-full bg-white/5 px-3 py-1">Alt phone: {company.alternativePhone}</span> : null}
+            <span className="rounded-full bg-white/5 px-3 py-1">Address: {company.address}</span>
+            <span className="rounded-full bg-white/5 px-3 py-1">WhatsApp consent: {company.whatsappMarketingConsent ? "Yes" : "No"}</span>
+            <span className="rounded-full bg-white/5 px-3 py-1">Terms: {company.termsAcceptedAt ? "Accepted" : "Not recorded"}</span>
             <span className="rounded-full bg-white/5 px-3 py-1">Email: {company.email}</span>
             {company.paymentReference ? (
               <span className="rounded-full bg-white/5 px-3 py-1">Payment ref: {company.paymentReference}</span>
@@ -505,39 +509,49 @@ function AdminCompanyCard({ company }: { company: CompanyWithServices }) {
 function OutreachCopySection({ companies }: { companies: CompanyWithServices[] }) {
   const listUrl = `${appConfig.appUrl}/list-your-company`;
   const providerUrl = `${appConfig.appUrl}/for-signage-companies`;
+  const launchUrl = `${appConfig.appUrl}/launch`;
+  const quoteUrl = `${appConfig.appUrl}/request-quote`;
   const claimUrlFormat = `${appConfig.appUrl}/list-your-company?claim=company-slug`;
   const copyCards = [
     {
-      title: "Invite a signage company to list",
-      text: `Hi [Company Name], we're building Sign Zim, a Zimbabwean marketplace where customers can find signage companies, view portfolios, and request quotes. You can submit your company listing here: ${listUrl}`
-    },
-    {
-      title: "Invite an interior deco provider",
-      text: `Hi [Company Name], we're building Sign Zim, a Zimbabwean marketplace where customers can find interior deco, branded space and wall branding providers, view portfolios, and request quotes. You can submit your company listing here: ${listUrl}`
-    },
-    {
-      title: "Invite a shop fitting provider",
-      text: `Hi [Company Name], we're building Sign Zim, a Zimbabwean marketplace where customers can find shop fitting, office fitting, counters, shelving, displays and branded space providers. You can submit your company listing here: ${listUrl}`
-    },
-    {
-      title: "Invite a general provider",
+      title: "General provider invite",
       text: `Hi [Company Name], we're building Sign Zim, a Zimbabwean marketplace where customers can find signage, interior deco, branding and fitting providers, view portfolios, and request quotes. You can submit your company listing here: ${listUrl}`
     },
     {
-      title: "Pitch a verified listing",
-      text: `Hi [Company Name], Sign Zim verified listings are designed to help customers trust your provider profile before they contact you. A verified profile can show reviewed business details, services, contact channels, and portfolio links. Learn more here: ${providerUrl}`
+      title: "Signage company invite",
+      text: `Hi [Company Name], Sign Zim is onboarding Zimbabwean signage companies for shopfront signs, lightboxes, 3D signage, vehicle branding and directional signs. Customers will be able to view your work and request quotes. Submit your listing here: ${listUrl}`
     },
     {
-      title: "Pitch a featured listing",
-      text: `Hi [Company Name], Sign Zim featured listings receive higher visibility on marketplace pages, helping your signage, branding, interior or fitting work appear ahead of standard listings. Featured placement is built for providers who want more customer attention and quote requests. Learn more here: ${providerUrl}`
+      title: "Interior deco provider invite",
+      text: `Hi [Company Name], Sign Zim is onboarding interior deco and branded-space providers for salons, offices, retail shops, lodges and reception areas. You can list your services and portfolio here: ${listUrl}`
     },
     {
-      title: "Follow up after a company submits",
-      text: "Hi [Company Name], thanks for submitting your Sign Zim listing. We are reviewing your services, contact details, and portfolio information. Once approved, your profile can appear on Sign Zim for customers looking for providers in Zimbabwe."
+      title: "Shop fitting provider invite",
+      text: `Hi [Company Name], Sign Zim is onboarding shop fitting and office fitting providers for counters, shelving, partitions, displays and commercial fit-outs. Submit your provider listing here: ${listUrl}`
     },
     {
-      title: "Claim listing URL format",
-      text: claimUrlFormat
+      title: "Claim this listing invite",
+      text: `Hi [Company Name], we have prepared a Sign Zim listing for your business so customers can find your services and contact details. Please review or claim it here: ${claimUrlFormat}`
+    },
+    {
+      title: "Featured listing pitch",
+      text: `Featured providers get priority visibility across Sign Zim, including marketplace pages, service pages and selected homepage sections. This can help more customers view your profile and contact you directly. Learn more here: ${providerUrl}`
+    },
+    {
+      title: "Verified listing pitch",
+      text: `Verified listings help customers trust your provider profile before they contact you. Sign Zim can highlight reviewed business details, services, contact channels and portfolio links so your company looks more credible. Learn more here: ${providerUrl}`
+    },
+    {
+      title: "Follow-up after provider submission",
+      text: "Hi [Company Name], thanks for submitting your Sign Zim listing. We are reviewing your services, contact details and portfolio information. Once approved, your profile can appear for customers looking for providers in Zimbabwe."
+    },
+    {
+      title: "Customer quote request follow-up",
+      text: `Hi [Customer Name], thanks for your Sign Zim quote request. We received your project details and will use them to help route your request to relevant signage, deco, branding or fitting providers. You can also browse providers here: ${appConfig.appUrl}/companies`
+    },
+    {
+      title: "Customer quote received acknowledgement",
+      text: `Hi [Customer Name], your Sign Zim quote request has been received. Please keep your phone available in case we or a provider need measurements, artwork, photos or site details. If you need to add anything, start here: ${quoteUrl}`
     }
   ];
 
@@ -545,10 +559,10 @@ function OutreachCopySection({ companies }: { companies: CompanyWithServices[] }
     <section className="mt-12">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Sales launch kit</p>
-          <h2 className="mt-3 text-2xl font-black text-white">Outreach Copy</h2>
+          <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Launch Sales Kit</p>
+          <h2 className="mt-3 text-2xl font-black text-white">WhatsApp-ready launch copy</h2>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400">
-            Quick copy blocks for recruiting providers and explaining verified or featured listing value.
+            Practical copy blocks for recruiting providers, pitching listing packages, claiming listings, and following up with early quote requests.
           </p>
         </div>
       </div>
@@ -561,7 +575,8 @@ function OutreachCopySection({ companies }: { companies: CompanyWithServices[] }
           <div className="mt-4 grid gap-3 lg:grid-cols-3">
             {[
               ["List your company URL", listUrl],
-              ["Featured listing pitch URL", providerUrl],
+              ["Provider pitch URL", providerUrl],
+              ["Launch page URL", launchUrl],
               ["Claim listing URL format", claimUrlFormat]
             ].map(([label, url]) => (
               <div key={label} className="rounded-md border border-white/10 bg-black/25 p-4">
@@ -783,9 +798,26 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
 
   const { pendingCompanies, approvedCompanies, archivedCompanies, leads, error } = await getAdminData();
   const allCompanies = [...pendingCompanies, ...approvedCompanies, ...archivedCompanies];
+  const checkedAt = new Date();
   const featuredCompanies = approvedCompanies.filter((company) => company.isFeatured);
   const verifiedCompanies = approvedCompanies.filter((company) => company.isVerified);
+  const foundingProviders = approvedCompanies.filter((company) => company.foundingProvider);
+  const complimentaryAccessActive = foundingProviders.filter((company) => company.complimentaryAccessEndsAt && company.complimentaryAccessEndsAt >= checkedAt);
   const newLeads = leads.filter((lead) => lead.status === "NEW");
+  const signageServiceSlugs = new Set<string>(
+    groupedServiceCatalog.find((item) => item.group === "Signage")?.services.map((service) => service.slug) ?? []
+  );
+  const interiorOrFittingServiceSlugs = new Set<string>(
+    groupedServiceCatalog
+      .filter((item) => item.group === "Interior Deco" || item.group === "Shop & Office Fitting")
+      .flatMap((item) => item.services.map((service) => service.slug))
+  );
+  const signageProviders = approvedCompanies.filter((company) =>
+    company.services.some((item) => signageServiceSlugs.has(item.service.slug))
+  );
+  const interiorOrFittingProviders = approvedCompanies.filter((company) =>
+    company.services.some((item) => interiorOrFittingServiceSlugs.has(item.service.slug))
+  );
   const contactedLeads = leads.filter((lead) => lead.status === "CONTACTED");
   const closedLeads = leads.filter((lead) => lead.status === "CLOSED");
   const totalProfileViews = allCompanies.reduce((total, company) => total + company.profileViewCount, 0);
@@ -793,8 +825,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
   const topByWhatsapp = [...allCompanies].sort((a, b) => b.whatsappClickCount - a.whatsappClickCount)[0];
   const topByViews = [...allCompanies].sort((a, b) => b.profileViewCount - a.profileViewCount)[0];
   const configStatus = getServerConfigStatus();
-  const checkedAt = new Date();
-  const databaseConnected = !error;
+ const databaseConnected = !error;
   const launchChecklist: LaunchChecklistItem[] = [
     {
       label: "Database URL configured",
@@ -819,47 +850,68 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
       note: `Public URL resolves to ${appConfig.appUrl}.`
     },
     {
-      label: "Add at least 5 approved providers",
-      complete: approvedCompanies.length >= 5,
-      note: `${approvedCompanies.length} approved compan${approvedCompanies.length === 1 ? "y" : "ies"} ready.`
+      label: "Add at least 10 approved providers",
+      complete: approvedCompanies.length >= 10,
+      note: `${approvedCompanies.length}/10 approved providers ready.`
     },
     {
-      label: "Add at least 3 verified providers",
-      complete: verifiedCompanies.length >= 3,
-      note: `${verifiedCompanies.length} verified compan${verifiedCompanies.length === 1 ? "y" : "ies"} ready.`
+      label: "Add at least 3 interior/fitting providers",
+      complete: interiorOrFittingProviders.length >= 3,
+      note: `${interiorOrFittingProviders.length}/3 approved interior, shop fitting, or office fitting providers ready.`
     },
     {
-      label: "Add at least 1 featured company",
-      complete: featuredCompanies.length >= 1,
-      note: `${featuredCompanies.length} featured compan${featuredCompanies.length === 1 ? "y" : "ies"} ready.`
+      label: "Add at least 3 signage providers",
+      complete: signageProviders.length >= 3,
+      note: `${signageProviders.length}/3 approved signage providers ready.`
     },
     {
-      label: "Capture at least 1 quote request",
+      label: "Test provider invite copy",
+      complete: true,
+      note: "Launch Sales Kit copy blocks are available below for WhatsApp testing."
+    },
+    {
+      label: "Test claim listing link",
+      complete: approvedCompanies.length > 0,
+      note: approvedCompanies.length ? "Claim links are generated for approved providers." : "Approve a provider to generate a real claim link."
+    },
+    {
+      label: "Test quote request form",
       complete: leads.length > 0,
-      note: `${leads.length} quote request${leads.length === 1 ? "" : "s"} found in admin.`
+      note: leads.length ? `${leads.length} quote request${leads.length === 1 ? "" : "s"} captured.` : "Submit a test quote request before launch."
     },
     {
-      label: "Sitemap available",
+      label: "Share launch page",
       complete: true,
-      note: "/sitemap.xml is generated from app routes."
+      note: `${appConfig.appUrl}/launch is ready to share with customers and providers.`
     },
     {
-      label: "Robots available",
+      label: "Contact first 30 providers",
+      complete: approvedCompanies.length >= 30,
+      note: `${approvedCompanies.length}/30 approved providers in the marketplace. Track outreach in the README launch plan.`
+    },
+    {
+      label: "Capture first 5 quote requests",
+      complete: leads.length >= 5,
+      note: `${leads.length}/5 quote requests captured.`
+    },
+    {
+      label: "Screenshot Launch Snapshot weekly",
+      complete: false,
+      note: "Manual weekly task: capture the Launch Snapshot section for investor, sales, or operator updates."
+    },
+    {
+      label: "Sitemap and robots available",
       complete: true,
-      note: "/robots.txt is generated from app routes."
-    },
-    {
-      label: "Share metadata configured",
-      complete: configStatus.appUrlConfigured,
-      note: "OG/Twitter metadata uses the public app URL and Sign Zim hero image."
+      note: "/sitemap.xml and /robots.txt are generated from app routes."
     }
   ];
-
   const stats = [
     { label: "Pending providers", value: pendingCompanies.length, icon: Clock },
     { label: "Approved providers", value: approvedCompanies.length, icon: Building2 },
     { label: "Featured providers", value: featuredCompanies.length, icon: Star },
     { label: "Verified providers", value: verifiedCompanies.length, icon: BadgeCheck },
+    { label: "Founding providers", value: foundingProviders.length, icon: Star },
+    { label: "Access active", value: complimentaryAccessActive.length, icon: BadgeCheck },
     { label: "New leads", value: newLeads.length, icon: MessageCircle },
     { label: "Contacted leads", value: contactedLeads.length, icon: Send },
     { label: "Closed leads", value: closedLeads.length, icon: CheckCircle2 },
@@ -872,7 +924,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
       <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-amberglow">Owner dashboard</p>
-          <h1 className="mt-4 text-5xl font-black text-white">Admin</h1>
+          <h1 className="mt-4 text-4xl font-black text-white sm:text-5xl">Admin</h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-zinc-300">
             Approve provider listings, maintain trust badges, manage featured placements, and move customer leads through the
             pipeline.
@@ -933,6 +985,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
 
       <section className="mt-12">
         <h2 className="text-2xl font-black text-white">Pending provider submissions</h2>
+        <p className="mt-2 text-sm leading-6 text-zinc-400">Confirm that contact details are reachable and proof images reasonably match the services claimed before approving.</p>
         <div className="mt-5 grid gap-5">
           {pendingCompanies.length ? (
             pendingCompanies.map((company) => <AdminCompanyCard key={company.id} company={company} />)
@@ -995,9 +1048,9 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
                         ) : null}
                       </div>
                     </div>
-                    <form action={updateLeadStatus} className="flex shrink-0 gap-2">
+                    <form action={updateLeadStatus} className="grid shrink-0 gap-2 sm:flex">
                       <input type="hidden" name="leadId" value={lead.id} />
-                      <select name="status" defaultValue={lead.status} className="input min-w-48">
+                      <select name="status" defaultValue={lead.status} className="input sm:min-w-48">
                         {leadStatuses.map((status) => (
                           <option key={status} value={status}>
                             {status}
@@ -1048,3 +1101,13 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+

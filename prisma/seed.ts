@@ -18,6 +18,11 @@ const portfolioImages = [
   "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80"
 ];
 
+function normalizeSeedPhone(value: string) {
+  const digits = value.replace(/[^0-9]/g, "");
+  return digits.startsWith("0") ? `263${digits.slice(1)}` : digits;
+}
+
 const companies = [
   {
     name: "Harare Neon Works",
@@ -247,7 +252,7 @@ const companies = [
     isFeatured: false,
     packageType: "FREE",
     contactPerson: "Memory Chiwara",
-    services: ["event-branding", "pull-up-banners", "teardrop-banners", "vinyl-printing"],
+    services: ["event-branding", "pull-up-banners", "teardrop-banners", "vinyl-printing", "exhibition-booths", "trade-show-displays"],
     portfolio: [portfolioImages[10], portfolioImages[3]]
   },
   {
@@ -310,7 +315,7 @@ const companies = [
     isFeatured: true,
     packageType: "FEATURED",
     contactPerson: "Mandla Moyo",
-    services: ["shop-fitting", "custom-counters", "shelving-installation", "retail-displays", "wall-branding"],
+    services: ["shop-fitting", "custom-counters", "shelving-installation", "retail-displays", "wall-branding", "kitchen-fitting", "custom-kitchens"],
     portfolio: [portfolioImages[1], portfolioImages[4], portfolioImages[7]]
   },
   {
@@ -352,7 +357,7 @@ const companies = [
     isFeatured: false,
     packageType: "VERIFIED",
     contactPerson: "Blessing Nyoni",
-    services: ["office-partitions", "glass-partitions", "office-fitting", "reception-branding"],
+    services: ["office-partitions", "glass-partitions", "drywall-partitions", "aluminium-partitions", "office-fit-outs", "reception-branding"],
     portfolio: [portfolioImages[3], portfolioImages[9]]
   },
   {
@@ -415,7 +420,7 @@ const companies = [
     isFeatured: false,
     packageType: "FREE",
     contactPerson: "Tawanda Mupfumi",
-    services: ["custom-counters", "shelving-installation", "shop-fitting", "display-stands"],
+    services: ["custom-counters", "shelving-installation", "shop-fitting", "display-stands", "built-in-cupboards", "kitchen-cabinets"],
     portfolio: [portfolioImages[6], portfolioImages[10]]
   }
 ] as const;
@@ -517,8 +522,8 @@ async function main() {
       coverImageUrl: company.coverImageUrl,
       city: company.city,
       address: company.address,
-      whatsapp: company.whatsapp,
-      email: company.email,
+      whatsapp: normalizeSeedPhone(company.whatsapp),
+      email: company.email || null,
       website: company.website || null,
       facebookUrl: company.facebookUrl || null,
       status: company.status as CompanyStatus,
@@ -529,6 +534,15 @@ async function main() {
       paymentStatus: paymentStatus as PaymentStatus,
       paymentReference: paymentStatus === "PAID" ? `MANUAL-${index + 1001}` : null,
       paidUntil,
+      alternativePhone: index % 3 === 0 ? normalizeSeedPhone("0772000000") : null,
+      whatsappMarketingConsent: index % 2 === 0,
+      whatsappMarketingConsentAt: index % 2 === 0 ? new Date("2026-07-10T00:00:00.000Z") : null,
+      termsAcceptedAt: new Date("2026-07-10T00:00:00.000Z"),
+      privacyAcceptedAt: new Date("2026-07-10T00:00:00.000Z"),
+      termsVersion: "2026-07-10",
+      foundingProvider: company.status !== "PENDING",
+      complimentaryAccessStartedAt: company.status !== "PENDING" ? new Date("2026-07-10T00:00:00.000Z") : null,
+      complimentaryAccessEndsAt: company.status !== "PENDING" ? new Date("2026-10-10T00:00:00.000Z") : null,
       adminNotes:
         company.packageType === "FEATURED"
           ? "Featured package selected. Confirm manual payment before extending placement."
@@ -627,3 +641,6 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
+
+
+

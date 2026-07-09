@@ -4,6 +4,14 @@ import { ArrowRight, BadgeCheck } from "lucide-react";
 import { SectionHeading } from "@/components/section-heading";
 import { groupedServiceCatalog } from "@/lib/data";
 
+const groupDescriptions: Record<string, string> = {
+  Signage: "Exterior and interior signs that help customers find, trust, and remember your business.",
+  "Branding & Print": "Printed and applied branding for vehicles, windows, walls, campaigns, and customer-facing surfaces.",
+  "Interior Deco": "Commercial interiors, branded ambience, wall finishes, reception branding, and decorative focal points.",
+  "Shop & Office Fitting": "Counters, shelving, partitions, office layouts, and practical fixtures for working spaces.",
+  "Events & Displays": "Portable displays, exhibition stands, POP displays, event branding, and retail activation tools."
+};
+
 export const metadata: Metadata = {
   title: "Signage, Deco & Fitting Services in Zimbabwe | Sign Zim",
   description:
@@ -29,7 +37,8 @@ export default function ServicesPage() {
         {groupedServiceCatalog.map(({ group, services }) => (
           <section key={group}>
             <h2 className="text-xl font-black text-white">{group}</h2>
-            <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400">{groupDescriptions[group]}</p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {services.map((service) => (
                 <Link
                   key={service.slug}

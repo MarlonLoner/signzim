@@ -49,9 +49,18 @@ model Company {
   logoUrl        String?
   coverImageUrl  String?
   city           String
-  address        String?
+  address        String
   whatsapp       String
-  email          String
+  alternativePhone String?
+  whatsappMarketingConsent Boolean @default(false)
+  whatsappMarketingConsentAt DateTime?
+  termsAcceptedAt DateTime?
+  privacyAcceptedAt DateTime?
+  termsVersion String?
+  foundingProvider Boolean @default(false)
+  complimentaryAccessStartedAt DateTime?
+  complimentaryAccessEndsAt DateTime?
+  email          String?
   website        String?
   facebookUrl    String?
   status         CompanyStatus      @default(PENDING)
@@ -129,3 +138,5 @@ model Review {
   createdAt    DateTime     @default(now())
   company      Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }
+
+

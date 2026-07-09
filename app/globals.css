@@ -75,11 +75,11 @@ textarea {
   }
 
   .primary-button {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-amberglow px-5 py-3 text-sm font-semibold text-black transition hover:bg-honey focus:outline-none focus:ring-2 focus:ring-amberglow/60 focus:ring-offset-2 focus:ring-offset-coal;
+    @apply inline-flex max-w-full items-center justify-center gap-2 whitespace-normal break-words rounded-md bg-amberglow px-5 py-3 text-center text-sm font-semibold leading-5 text-black transition hover:bg-honey focus:outline-none focus:ring-2 focus:ring-amberglow/60 focus:ring-offset-2 focus:ring-offset-coal;
   }
 
   .secondary-button {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-amberglow/60 hover:bg-amberglow/10 focus:outline-none focus:ring-2 focus:ring-amberglow/40 focus:ring-offset-2 focus:ring-offset-coal;
+    @apply inline-flex max-w-full items-center justify-center gap-2 whitespace-normal break-words rounded-md border border-white/15 bg-white/5 px-5 py-3 text-center text-sm font-semibold leading-5 text-white transition hover:border-amberglow/60 hover:bg-amberglow/10 focus:outline-none focus:ring-2 focus:ring-amberglow/40 focus:ring-offset-2 focus:ring-offset-coal;
   }
 
   .icon-button {
