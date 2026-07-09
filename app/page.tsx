@@ -71,7 +71,7 @@ export default async function HomePage() {
               interior deco, shop fitting, office fitting, reception branding, wall branding, displays, counters and more.
             </p>
 
-            <form action="/companies" className="mt-10 rounded-lg border border-white/10 bg-black/65 p-3 shadow-glow backdrop-blur">
+            <form action="/companies" className="mt-10 rounded-lg border border-white/10 bg-black/65 p-3 md:shadow-glow md:backdrop-blur">
               <div className="grid gap-3 lg:grid-cols-[1.25fr_0.8fr_0.8fr_auto]">
                 <label className="sr-only" htmlFor="home-search">
                   Search companies
@@ -184,7 +184,7 @@ export default async function HomePage() {
             <Link
               key={service.slug}
               href={`/services/${service.slug}`}
-              className="group rounded-lg border border-white/10 bg-white/[0.045] p-5 transition hover:-translate-y-1 hover:border-amberglow/50 hover:bg-amberglow/10"
+              className="group rounded-lg border border-white/10 bg-white/[0.045] p-5 transition md:hover:-translate-y-1 hover:border-amberglow/50 hover:bg-amberglow/10"
             >
               <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-md bg-amberglow text-black">
                 <BadgeCheck className="h-5 w-5" aria-hidden="true" />

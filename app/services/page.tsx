@@ -43,7 +43,7 @@ export default function ServicesPage() {
                 <Link
                   key={service.slug}
                   href={`/services/${service.slug}`}
-                  className="group rounded-lg border border-white/10 bg-white/[0.045] p-6 transition hover:-translate-y-1 hover:border-amberglow/50"
+                  className="group rounded-lg border border-white/10 bg-white/[0.045] p-6 transition md:hover:-translate-y-1 hover:border-amberglow/50"
                 >
                   <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-md bg-amberglow text-black">
                     <BadgeCheck className="h-5 w-5" aria-hidden="true" />

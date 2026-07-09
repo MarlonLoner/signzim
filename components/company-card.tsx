@@ -17,7 +17,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
   return (
     <article
       className={cn(
-        "group overflow-hidden rounded-lg border bg-white/[0.045] shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-amberglow/50",
+        "group overflow-hidden rounded-lg border bg-white/[0.045] shadow-2xl shadow-black/30 transition md:hover:-translate-y-1 hover:border-amberglow/50",
         company.isVerified ? "border-emerald-300/25 shadow-emerald-950/20" : "border-white/10"
       )}
     >

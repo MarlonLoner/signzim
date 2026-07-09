@@ -101,4 +101,70 @@ canvas {
     @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-white/10 bg-white/5 text-zinc-100 transition hover:border-amberglow/60 hover:bg-amberglow/10;
   }
 }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
 
+@media (max-width: 767px) {
+  body {
+    background:
+      linear-gradient(135deg, rgba(245, 197, 66, 0.07), transparent 24rem),
+      #070707;
+  }
+
+  .panel,
+  .input,
+  .checkbox-card,
+  .primary-button,
+  .secondary-button,
+  .icon-button,
+  .backdrop-blur,
+  .backdrop-blur-xl {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    filter: none !important;
+  }
+
+  .panel {
+    background-color: rgba(17, 18, 20, 0.96);
+    box-shadow: none !important;
+  }
+
+  .shadow-2xl,
+  .shadow-glow {
+    box-shadow: none !important;
+  }
+
+  .primary-button,
+  .secondary-button,
+  .icon-button,
+  .checkbox-card,
+  .input {
+    transition: none !important;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  a,
+  button,
+  .group,
+  .hover\:-translate-y-1,
+  .group-hover\:translate-x-1 {
+    transform: none !important;
+  }
+
+  a:hover,
+  button:hover,
+  .group:hover,
+  .hover\:-translate-y-1:hover,
+  .group:hover .group-hover\:translate-x-1 {
+    transform: none !important;
+  }
+}

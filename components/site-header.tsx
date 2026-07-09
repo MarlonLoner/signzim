@@ -19,7 +19,7 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-coal/85 backdrop-blur-xl">
+    <header className="relative z-50 border-b border-white/10 bg-coal md:sticky md:top-0 md:bg-coal/85 md:backdrop-blur-xl">
       <div className="page-shell flex h-16 min-w-0 items-center justify-between gap-3">
         <Link href="/" className="flex min-w-0 flex-1 items-center gap-3" aria-label="SignZim home" onClick={() => setMenuOpen(false)}>
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-amberglow text-black shadow-glow">
@@ -57,7 +57,7 @@ export function SiteHeader() {
       </div>
 
       {menuOpen ? (
-        <div id="mobile-navigation" className="border-t border-white/10 bg-coal shadow-2xl shadow-black/40 lg:hidden">
+        <div id="mobile-navigation" className="border-t border-white/10 bg-coal lg:hidden">
           <nav className="page-shell grid gap-1 py-3 text-sm font-semibold text-zinc-200">
             {navItems.map((item) => (
               <Link
